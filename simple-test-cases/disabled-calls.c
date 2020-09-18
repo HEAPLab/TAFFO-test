@@ -1,4 +1,4 @@
-///TAFFO_TEST_ARGS 
+///TAFFO_TEST_ARGS
 #include <stdio.h>
 
 float test(float a)

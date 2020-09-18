@@ -1,6 +1,5 @@
-///TAFFO_TEST_ARGS 
+///TAFFO_TEST_ARGS -Xvra -propagate-all
 #include <stdio.h>
-#include <math.h>
 
 
 float fun(void) __attribute((annotate("scalar(range(-10, 10))")))

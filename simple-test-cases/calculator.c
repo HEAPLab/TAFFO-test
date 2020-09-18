@@ -1,10 +1,10 @@
-///TAFFO_TEST_ARGS 
+///TAFFO_TEST_ARGS -Xvra -propagate-all
 #include <stdio.h>
 
 
 #define DO(op) { \
-  float __attribute__((annotate("range -3000 +3000"))) tmp1; \
-  float __attribute__((annotate("range -3000 +3000"))) tmp2; \
+  float __attribute__((annotate("scalar(range(-3000, +3000))"))) tmp1; \
+  float __attribute__((annotate("scalar(range(-3000, +3000))"))) tmp2; \
   tmp2 = stack[--sp]; \
   tmp1 = stack[--sp]; \
   stack[sp++] = tmp1 op tmp2; \
@@ -15,7 +15,7 @@ int main(int argc, char *argv[])
 {
   float tmp;
   char buffer[256];
-  float __attribute__((annotate("range -3000 +3000"))) stack[32];
+  float __attribute__((annotate("scalar(range(-3000, +3000))"))) stack[32];
   int sp = 0;
   
   while (1) {

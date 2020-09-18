@@ -1,4 +1,4 @@
-///TAFFO_TEST_ARGS 
+///TAFFO_TEST_ARGS -Xvra -propagate-all -Xvra -unroll=10
 /* Scrivere un programma che acquisisce una seq di num reali corrisp a diversi valori di 
  * pressione in una caldaia. Questi val sono misurati a intervalli regolari in sequenza.
  * La seq è terminata dall'inserimento di un valore negativo. Il programma calcola la
@@ -11,11 +11,11 @@
 #include <stdio.h>
 
 int main(int argc, char *argv[]) {
-  float p1 __attribute((annotate("range -3000 3000")));
-  float p2 __attribute((annotate("range -3000 3000")));
-  float p3;  /* FIXME: don't convert this because it's a param to the scanf */
-  float sPeak __attribute((annotate("range -3000 3000")));
-  float sAll __attribute((annotate("range -3000 3000")));
+  float p1 __attribute((annotate("scalar()")));
+  float p2 __attribute((annotate("scalar()")));
+  float p3 __attribute((annotate("scalar(range(-3000, 3000) disabled final)")));
+  float sPeak __attribute((annotate("scalar()")));
+  float sAll __attribute((annotate("scalar()")));
   int cPeak, cAll;
   
   p3 = p2 = p1 = -1;

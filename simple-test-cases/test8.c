@@ -1,4 +1,4 @@
-///TAFFO_TEST_ARGS 
+///TAFFO_TEST_ARGS -Xvra -propagate-all
 
 typedef struct spell {
   float might;

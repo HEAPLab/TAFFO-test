@@ -1,4 +1,4 @@
-///TAFFO_TEST_ARGS 
+///TAFFO_TEST_ARGS -Xvra -propagate-all
 
 
 /* compile with -O1 */
@@ -14,9 +14,9 @@ float random(void)
 
 float test(int p1, int p2, int p3)
 {
-  float f1 __attribute((annotate("range -32767 32767"))) = random(); 
-  float f2 __attribute((annotate("range -32767 32767"))) = random();
-  float phi __attribute((annotate("range -32767 32767")));
+  float f1 __attribute((annotate("scalar(range(-32767, 32767)"))) = random(); 
+  float f2 __attribute((annotate("scalar(range(-32767, 32767)"))) = random();
+  float phi __attribute((annotate("scalar(range(-32767, 32767)")));
   
   if (p1)
     phi = 1.0;

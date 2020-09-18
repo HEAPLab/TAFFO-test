@@ -1,8 +1,9 @@
-///TAFFO_TEST_ARGS 
+///TAFFO_TEST_ARGS -Xvra -propagate-all
+#include <stdio.h>
 
 double test(void)
 {
-	double a __attribute((annotate("range -100 100")));
+	double a __attribute((annotate("scalar()")));
 	double b = 98.0, c = 77.0;
 	b = b - c;
 	a = b * 2.0;

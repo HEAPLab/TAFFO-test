@@ -1,12 +1,11 @@
-///TAFFO_TEST_ARGS -Xvra -propagate-all
+///TAFFO_TEST_ARGS
 #include <stdio.h>
-#include <math.h>
 
 
-float glob __attribute((annotate("scalar(range(-10, 10))")));
+float glob __attribute((annotate("scalar()")));
 
 
-float *fun(void) __attribute((annotate("scalar(range(-10, 10))")))
+float *fun(void) __attribute((annotate("scalar()")))
 {
   return &glob;
 }
@@ -14,8 +13,8 @@ float *fun(void) __attribute((annotate("scalar(range(-10, 10))")))
 
 int main()
 {
-  float *x __attribute((annotate("scalar(range(-10, 10))"))) = fun();
-  float t;
+  float *x __attribute((annotate("target('x') scalar()"))) = fun();
+  float t __attribute((annotate("scalar(range(-10, 10) disabled)")));
   scanf("%f", &t);
   *x = t;
   printf("%f\n", *x);

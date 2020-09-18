@@ -1,3 +1,4 @@
+///TAFFO_TEST_ARGS -Xvra -propagate-all
 #include <stdio.h>
 #include <stdio.h>
 #include <string.h>
@@ -5,7 +6,7 @@
 
 
 #define ANNOTATION_RGBPIXEL         "struct[scalar(range(0,255)),scalar(range(0,255)),scalar(range(0,255)),void,scalar(range(0,1))]"
-#define ANNOTATION_RGBIMAGE         "struct[void,void," ANNOTATION_RGBPIXEL ",void]"
+#define ANNOTATION_RGBIMAGE         "struct[void,void," ANNOTATION_RGBPIXEL "]"
 
 typedef struct {
    float r;
@@ -31,7 +32,7 @@ int main (int argc, const char* argv[])
 
   // check for 'undef's around this malloc
 	image.pixels = (RgbPixel**)malloc(image.h * sizeof(RgbPixel*));
-	
+
 	return 0;
 }
 

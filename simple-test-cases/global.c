@@ -1,8 +1,8 @@
-///TAFFO_TEST_ARGS 
+///TAFFO_TEST_ARGS -Xvra -propagate-all
 #include <stdio.h>
 
-double vec[10] __attribute((annotate("range -32767 32767")));
-double scal __attribute((annotate("range -32767 32767")));
+double vec[10] __attribute((annotate("scalar()")));
+double scal __attribute((annotate("scalar()")));
 
 
 int main(int argc, char *argv[])

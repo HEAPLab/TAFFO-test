@@ -1,6 +1,6 @@
-///TAFFO_TEST_ARGS
+///TAFFO_TEST_ARGS -Xvra -propagate-all
+#include <stdio.h>
 #include <stdlib.h>
-
 
 int main(int argc, char *argv[])
 {

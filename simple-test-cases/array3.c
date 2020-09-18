@@ -1,4 +1,4 @@
-///TAFFO_TEST_ARGS 
+///TAFFO_TEST_ARGS -Xvra -propagate-all -Xvra -max-unroll=10
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -112,7 +112,7 @@ int randomInRange(int a, int b)
     for (int i=0; i<N; i+=2) {                                \
       buf[i] = buf[i] op buf[i+1];                            \
     }                                                         \
-    __attribute__((annotate("range -3000 3000"))) float sync = 0.0;   \
+    __attribute__((annotate("scalar(range(-3000, 3000))"))) float sync = 0.0;   \
     for (int i=0; i<N; i++)                                   \
       sync += buf[i];                                         \
     samples[t] = timerStop();                                 \
@@ -129,7 +129,7 @@ int randomInRange(int a, int b)
 
 int main(int argc, char *argv[])
 {
-  __attribute__((annotate("range -3000 3000"))) float buf[N*2];
+  __attribute__((annotate("scalar(range(-3000, 3000))"))) float buf[N*2];
 
   for (int i=0; i<N; i++) {
     buf[i] = (float)randomInRange(0, 0x100) / 32768.0;

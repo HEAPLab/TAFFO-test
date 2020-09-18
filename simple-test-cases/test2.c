@@ -1,4 +1,4 @@
-///TAFFO_TEST_ARGS 
+///TAFFO_TEST_ARGS -Xvra -propagate-all
 
 
 float global;
@@ -6,7 +6,7 @@ float global;
 float test(float param, int notafloat)
 {
   int notafloat2;
-  float local __attribute((annotate("range -1000000000 1000000000")));
+  float local __attribute((annotate("scalar(range(-1000000000, 1000000000))")));
   
   local = 134217728.0;
   local *= param;
