@@ -10,7 +10,7 @@ int main(int argc, char *argv[])
     float tmp;
     scanf("%f", &tmp);
     test[i] = tmp;
-    printf("%f\n", test[i]);
+    printf("%a\n", test[i]);
   }
   return 0;
 }
