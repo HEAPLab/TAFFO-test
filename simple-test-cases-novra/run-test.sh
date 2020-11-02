@@ -40,7 +40,7 @@ recompile_one() {
   if [[ $FLOAT -eq 1 ]]; then
     args="$args -float-output ${1%.*}.float.out"
   fi
-  $TIMEOUT "$SCRIPTPATH"/../magiclang2.sh "$args" -o "$out" "$input" $extraargs -debug 2> "$input".log
+  $TIMEOUT taffo "$args" -o "$out" "$input" $extraargs -debug -temp-dir . 2> "$input".log
   bpid_fc=$?
   if [[ $bpid_fc -ne 0 ]]; then
     code='FAIL'
@@ -75,7 +75,7 @@ recompile_one() {
 }
 
 if [[ "$1" == "clean" ]]; then
-  rm "$SCRIPTPATH"/*.magiclangtmp.*
+  rm "$SCRIPTPATH"/*.taffotmp.*
   rm "$SCRIPTPATH"/*.out
   rm "$SCRIPTPATH"/*.log
   exit 0
@@ -95,7 +95,7 @@ else
 fi
 
 for fn in $files; do
-  if [[ ( "$fn" != *.magiclangtmp.ll ) && ( "$fn" != *NOT-WORKING-YET* ) ]]; then
+  if [[ ( "$fn" != *.taffotmp.ll ) && ( "$fn" != *NOT-WORKING-YET* ) ]]; then
     recompile_one "$fn" || exit $?
   fi
 done
