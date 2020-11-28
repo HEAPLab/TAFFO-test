@@ -13,3 +13,4 @@ axbench-static/jmeint_*/data/input/*.data
 axbench-static/*/obj*
 axbench-static/*/bin*
 axbench-static/*/stats*
+*~
