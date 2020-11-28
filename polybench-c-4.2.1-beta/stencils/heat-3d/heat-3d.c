@@ -105,7 +105,7 @@ int main(int argc, char** argv)
   int tsteps = TSTEPS;
 
   /* Variable declaration/allocation. */
-  POLYBENCH_3D_ARRAY_DECL(A, DATA_TYPE __attribute__((annotate("scalar()"))), N, N, N, n, n, n);
+  POLYBENCH_3D_ARRAY_DECL(A, DATA_TYPE __attribute__((annotate("target('A') scalar()"))), N, N, N, n, n, n);
   POLYBENCH_3D_ARRAY_DECL(B, DATA_TYPE __attribute__((annotate("scalar()"))), N, N, N, n, n, n);
 
 

@@ -10,7 +10,7 @@ if [[ -z $(which $TIMEOUT) ]]; then
   TIMEOUT='gtimeout'
 fi
 if [[ ! ( -z $(which $TIMEOUT) ) ]]; then
-  TIMEOUT="$TIMEOUT 20"
+  TIMEOUT="$TIMEOUT 120"
 else
   printf 'warning: timeout command not found\n'
   TIMEOUT=''
@@ -30,9 +30,10 @@ compile_one()
   xparams=$2
   benchdir=$(dirname $benchpath)
   benchname=$(basename $benchdir)
-  $TIMEOUT ../magiclang2.sh \
+  $TIMEOUT taffo \
     -o build/"$benchname".out \
     -float-output build/"$benchname".float.out \
+    -temp-dir build \
     "$benchpath" \
     ./utilities/polybench.c \
     -I"$benchdir" \
@@ -50,6 +51,17 @@ compile_one()
     $OPT -S -O3 -o build/"$benchname".float.out.ll build/"$benchname".out.1.magiclangtmp.ll
     $INSTMIX build/"$benchname".float.out.ll > results-out/${benchname}.float.imix.txt
     $TAFFO_MLFEAT build/"$benchname".float.out.ll > results-out/${benchname}.float.mlfeat.txt
+  fi
+}
+
+read_opts()
+{
+  benchpath=$1
+  optspath=$(dirname ${benchpath})/$(basename ${benchpath} .c).opts
+  if [ -a ${optspath} ]; then
+    echo $(tr '\n' ' ' < ${optspath})
+  else
+    echo "-Xerr -nounroll -Xerr -startonly"
   fi
 }
 
@@ -105,11 +117,13 @@ for bench in $all_benchs; do
   if [[ "$bench" =~ $ONLY ]]; then
     skipped_all=0
     printf '[....] %s' "$bench"
+    opts=$(read_opts ${bench})
     compile_one "$bench" \
-      "-O3 -g -Xvra -propagate-all \
+      "-O3 -Xvra -max-unroll=0 \
       -DPOLYBENCH_TIME -DPOLYBENCH_DUMP_ARRAYS -DPOLYBENCH_STACK_ARRAYS \
       -D$D_CONF -D$D_STANDARD_DATASET \
-      -Xdta -totalbits -Xdta $TOT"
+      -Xdta -totalbits -Xdta $TOT \
+      -enable-err $opts"
     bpid_fc=$?
     if [[ $bpid_fc == 0 ]]; then
       bpid_fc=' ok '

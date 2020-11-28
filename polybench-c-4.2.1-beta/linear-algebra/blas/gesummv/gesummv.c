@@ -109,7 +109,7 @@ int main(int argc, char** argv)
   POLYBENCH_2D_ARRAY_DECL(B, DATA_TYPE __attribute__((annotate("scalar()"))), N, N, n, n);
   POLYBENCH_1D_ARRAY_DECL(tmp, DATA_TYPE __attribute__((annotate("scalar(range(-256, 255) final)"))), N, n);
   POLYBENCH_1D_ARRAY_DECL(x, DATA_TYPE __attribute__((annotate("scalar()"))), N, n);
-  POLYBENCH_1D_ARRAY_DECL(y, DATA_TYPE __attribute__((annotate("scalar(range(-256, 255) final)"))), N, n);
+  POLYBENCH_1D_ARRAY_DECL(y, DATA_TYPE __attribute__((annotate("target('y') scalar(range(-256, 255) final)"))), N, n);
 
 
   /* Initialize array(s). */

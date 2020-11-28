@@ -119,7 +119,7 @@ int main(int argc, char** argv)
 
   /* Variable declaration/allocation. */
   POLYBENCH_1D_ARRAY_DECL(seq, base, N, n);
-  POLYBENCH_2D_ARRAY_DECL(table, DATA_TYPE __attribute__((annotate("scalar()"))), N, N, n, n);
+  POLYBENCH_2D_ARRAY_DECL(table, DATA_TYPE __attribute__((annotate("target('table') scalar()"))), N, N, n, n);
 
   /* Initialize array(s). */
   init_array (n, POLYBENCH_ARRAY(seq), POLYBENCH_ARRAY(table));

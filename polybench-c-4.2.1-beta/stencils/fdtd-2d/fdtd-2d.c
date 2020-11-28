@@ -128,9 +128,9 @@ int main(int argc, char** argv)
   int ny = NY;
 
   /* Variable declaration/allocation. */
-  POLYBENCH_2D_ARRAY_DECL(ex,DATA_TYPE __attribute__((annotate("scalar()"))),NX,NY,nx,ny);
-  POLYBENCH_2D_ARRAY_DECL(ey,DATA_TYPE __attribute__((annotate("scalar()"))),NX,NY,nx,ny);
-  POLYBENCH_2D_ARRAY_DECL(hz,DATA_TYPE __attribute__((annotate("scalar()"))),NX,NY,nx,ny);
+  POLYBENCH_2D_ARRAY_DECL(ex,DATA_TYPE __attribute__((annotate("target('ex') scalar()"))),NX,NY,nx,ny);
+  POLYBENCH_2D_ARRAY_DECL(ey,DATA_TYPE __attribute__((annotate("target('ey') scalar()"))),NX,NY,nx,ny);
+  POLYBENCH_2D_ARRAY_DECL(hz,DATA_TYPE __attribute__((annotate("target('hz') scalar()"))),NX,NY,nx,ny);
   POLYBENCH_1D_ARRAY_DECL(_fict_,DATA_TYPE __attribute__((annotate("scalar()"))),TMAX,tmax);
 
   /* Initialize array(s). */

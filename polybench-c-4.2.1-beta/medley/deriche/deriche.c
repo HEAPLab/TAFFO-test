@@ -165,7 +165,7 @@ int main(int argc, char** argv)
   /* Variable declaration/allocation. */
   DATA_TYPE __attribute__((annotate("scalar()"))) alpha;
   POLYBENCH_2D_ARRAY_DECL(imgIn, DATA_TYPE  __attribute__((annotate("scalar()"))), W, H, w, h);
-  POLYBENCH_2D_ARRAY_DECL(imgOut, DATA_TYPE __attribute__((annotate("scalar()"))), W, H, w, h);
+  POLYBENCH_2D_ARRAY_DECL(imgOut, DATA_TYPE __attribute__((annotate("target('imgOut') scalar()"))), W, H, w, h);
   POLYBENCH_2D_ARRAY_DECL(y1, DATA_TYPE __attribute__((annotate("scalar()"))), W, H, w, h);
   POLYBENCH_2D_ARRAY_DECL(y2, DATA_TYPE __attribute__((annotate("scalar()"))), W, H, w, h);
 

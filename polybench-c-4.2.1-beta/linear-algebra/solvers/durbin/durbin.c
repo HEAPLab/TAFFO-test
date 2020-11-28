@@ -102,7 +102,7 @@ int main(int argc, char** argv)
 
   /* Variable declaration/allocation. */
   POLYBENCH_1D_ARRAY_DECL(r, DATA_TYPE __attribute__((annotate("scalar()"))), N, n);
-  POLYBENCH_1D_ARRAY_DECL(y, DATA_TYPE __attribute__((annotate("scalar(range(-2, 2) final)"))), N, n);
+  POLYBENCH_1D_ARRAY_DECL(y, DATA_TYPE __attribute__((annotate("target('y') scalar(range(-2, 2) final)"))), N, n);
 
 
   /* Initialize array(s). */
