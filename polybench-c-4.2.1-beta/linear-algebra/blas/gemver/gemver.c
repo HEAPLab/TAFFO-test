@@ -36,8 +36,8 @@ void init_array (int n,
 		 DATA_TYPE POLYBENCH_1D(y,N,n),
 		 DATA_TYPE POLYBENCH_1D(z,N,n))
 {
-  int i __attribute((annotate("scalar(range(0," PB_XSTR(N) "))")));
-  int j __attribute((annotate("scalar(range(0," PB_XSTR(N) "))")));
+  int i __attribute((annotate("scalar(range(0," PB_XSTR(N) ") final)")));
+  int j __attribute((annotate("scalar(range(0," PB_XSTR(N) ") final)")));
 
   *alpha = 1.5;
   *beta = 1.2;

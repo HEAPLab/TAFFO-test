@@ -27,8 +27,8 @@ void init_array (int m, int n,
 		 DATA_TYPE POLYBENCH_2D(A,M,N,m,n),
 		 DATA_TYPE POLYBENCH_1D(x,N,n))
 {
-  int i __attribute__((annotate("scalar(range(0, " PB_XSTR(N) "))")));
-  int j __attribute__((annotate("scalar(range(0, " PB_XSTR(N) "))")));
+  int i __attribute__((annotate("scalar(range(0, " PB_XSTR(N) ") final)")));
+  int j __attribute__((annotate("scalar(range(0, " PB_XSTR(N) ") final)")));
   DATA_TYPE __attribute__((annotate("scalar()"))) fn;
   fn = (DATA_TYPE)n;
 

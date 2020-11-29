@@ -59,10 +59,17 @@ read_opts()
   benchpath=$1
   optspath=$(dirname ${benchpath})/$(basename ${benchpath} .c).opts
   if [ -a ${optspath} ]; then
-    echo $(tr '\n' ' ' < ${optspath})
+    opts=$(tr '\n' ' ' < ${optspath})
   else
-    echo "-Xerr -nounroll -Xerr -startonly"
+    opts=
   fi
+  if [[ "$opts" != *-Xerr* ]]; then
+      opts="$opts -Xerr -nounroll -Xerr -startonly"
+  fi
+  if [[ "$opts" != *-Xvra* ]]; then
+      opts="$opts -Xvra -max-unroll=0"
+  fi
+  echo "$opts"
 }
 
 
@@ -119,7 +126,7 @@ for bench in $all_benchs; do
     printf '[....] %s' "$bench"
     opts=$(read_opts ${bench})
     compile_one "$bench" \
-      "-O3 -Xvra -max-unroll=0 \
+      "-O3 \
       -DPOLYBENCH_TIME -DPOLYBENCH_DUMP_ARRAYS -DPOLYBENCH_STACK_ARRAYS \
       -D$D_CONF -D$D_STANDARD_DATASET \
       -Xdta -totalbits -Xdta $TOT \
