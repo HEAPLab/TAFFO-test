@@ -46,11 +46,11 @@ compile_one()
     
   if [[ $RUN_METRICS -ne 0 ]]; then
     mkdir -p results-out
-    $INSTMIX build/"$benchname".out.5.magiclangtmp.ll > results-out/${benchname}.imix.txt
-    $TAFFO_MLFEAT build/"$benchname".out.5.magiclangtmp.ll > results-out/${benchname}.mlfeat.txt
-    $OPT -S -O3 -o build/"$benchname".float.out.ll build/"$benchname".out.1.magiclangtmp.ll
-    $INSTMIX build/"$benchname".float.out.ll > results-out/${benchname}.float.imix.txt
-    $TAFFO_MLFEAT build/"$benchname".float.out.ll > results-out/${benchname}.float.mlfeat.txt
+    taffo-instmix build/"$benchname".out.5.taffotmp.ll > results-out/${benchname}.imix.txt
+    taffo-mlfeat build/"$benchname".out.5.taffotmp.ll > results-out/${benchname}.mlfeat.txt
+    $OPT -S -O3 -o build/"$benchname".float.out.ll build/"$benchname".out.1.taffotmp.ll
+    taffo-instmix build/"$benchname".float.out.ll > results-out/${benchname}.float.imix.txt
+    taffo-mlfeat build/"$benchname".float.out.ll > results-out/${benchname}.float.mlfeat.txt
   fi
 }
 
