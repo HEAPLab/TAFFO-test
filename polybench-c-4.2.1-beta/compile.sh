@@ -73,7 +73,23 @@ read_opts()
   if [[ "$opts" != *-Xvra* ]]; then
       opts="$opts -Xvra -max-unroll=0"
   fi
-  echo "$opts"
+  
+  # filter opts if errorprop is disabled
+  if [[ -z $ERRORPROP ]]; then
+    skip=0
+    for opt in $opts; do
+      if [[ ( $opt == '-Xerr' ) && ( $skip -eq 0 ) ]]; then
+        skip=$((skip + 2))
+      fi
+      if [[ $skip -eq 0 ]]; then
+        printf '%s ' "$opt"
+      else
+        skip=$((skip - 1))
+      fi
+    done
+  else
+    echo "$opts"
+  fi
 }
 
 
@@ -87,6 +103,7 @@ ONLY='.*'
 TOT='32'
 D_CONF="CONF_GOOD"
 RUN_METRICS=0
+ERRORPROP='-enable-err'
 
 for arg; do
   case $arg in
@@ -109,6 +126,9 @@ for arg; do
       ;;
     --tot=*)
       TOT="${arg#*=}"
+      ;;
+    --no-err)
+      ERRORPROP=''
       ;;
     metrics)
       RUN_METRICS=1
@@ -134,7 +154,7 @@ for bench in $all_benchs; do
       -DPOLYBENCH_TIME -DPOLYBENCH_DUMP_ARRAYS -DPOLYBENCH_STACK_ARRAYS \
       -D$D_CONF -D$D_STANDARD_DATASET \
       -Xdta -totalbits -Xdta $TOT \
-      -enable-err $opts"
+      $ERRORPROP $opts"
     bpid_fc=$?
     if [[ $bpid_fc == 0 ]]; then
       bpid_fc=' ok '
