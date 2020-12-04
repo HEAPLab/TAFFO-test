@@ -16,3 +16,4 @@ axbench-static/*/stats*
 *~
 *.taffotmp.ll
 *.taffotmp.s
+*.taffotmp.txt
