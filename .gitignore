@@ -14,3 +14,5 @@ axbench-static/*/obj*
 axbench-static/*/bin*
 axbench-static/*/stats*
 *~
+*.taffotmp.ll
+*.taffotmp.s

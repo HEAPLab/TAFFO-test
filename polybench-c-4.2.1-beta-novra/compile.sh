@@ -23,6 +23,10 @@ else
 fi
 if [[ -z "$OPT" ]]; then OPT=${llvmbin}opt; fi
 
+if [[ -z $(which taffo) ]]; then
+  echo -e '\031[33m'"Error"'\033[39m'" taffo command not found. Install taffo and make sure the place where you installed it is in your PATH!";
+fi
+
 
 compile_one()
 {
@@ -30,7 +34,7 @@ compile_one()
   xparams=$2
   benchdir=$(dirname $benchpath)
   benchname=$(basename $benchdir)
-  $TIMEOUT ../magiclang2.sh \
+  $TIMEOUT taffo \
     -o build/"$benchname".out \
     -float-output build/"$benchname".float.out \
     "$benchpath" \
@@ -41,7 +45,8 @@ compile_one()
     $xparams \
     -debug-taffo \
     -lm \
-    2> build/${benchname}.log
+    -temp-dir build \
+    2> build/${benchname}.log || return $?
     
   if [[ $RUN_METRICS -ne 0 ]]; then
     mkdir -p results-out
