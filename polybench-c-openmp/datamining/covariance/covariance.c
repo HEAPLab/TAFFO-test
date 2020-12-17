@@ -105,10 +105,10 @@ int main(int argc, char** argv)
   int m = M;
 
   /* Variable declaration/allocation. */
-  DATA_TYPE float_n;
-  POLYBENCH_2D_ARRAY_DECL(data,DATA_TYPE,M,N,m,n);
-  POLYBENCH_2D_ARRAY_DECL(symmat,DATA_TYPE,M,M,m,m);
-  POLYBENCH_1D_ARRAY_DECL(mean,DATA_TYPE,M,m);
+  DATA_TYPE __attribute((annotate("target('float_n') scalar(range(2, 300))"))) float_n;
+  POLYBENCH_2D_ARRAY_DECL(data,DATA_TYPE __attribute((annotate("target('data') scalar(range(-1127274309028, +1127274309028) final)"))),M,N,m,n);
+  POLYBENCH_2D_ARRAY_DECL(symmat,DATA_TYPE __attribute((annotate("target('cov') scalar(range(-1127274309028, +1127274309028) final)"))),M,M,m,m);
+  POLYBENCH_1D_ARRAY_DECL(mean,DATA_TYPE __attribute((annotate("target('mean') scalar()"))),M,m);
   
   /* Initialize array(s). */
   init_array (m, n, &float_n, POLYBENCH_ARRAY(data));
