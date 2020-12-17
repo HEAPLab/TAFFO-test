@@ -29,7 +29,8 @@ void init_array (int m,
 		 DATA_TYPE *float_n,
 		 DATA_TYPE POLYBENCH_2D(data,M,N,m,n))
 {
-  int i, j;
+  int __attribute((annotate("scalar(range(0, 260) final disabled)"))) i;
+  int __attribute((annotate("scalar(range(0, 240) final disabled)"))) j;
 
   *float_n = 1.2;
 
@@ -69,7 +70,7 @@ void kernel_correlation(int m, int n,
 {
   int i, j, j1, j2;
 
-  DATA_TYPE eps = 0.1f;
+  DATA_TYPE __attribute((annotate("scalar()"))) eps = 0.1f;
 
 #define sqrt_of_array_cell(x,j) sqrt(x[j])
 
@@ -135,10 +136,10 @@ int main(int argc, char** argv)
 
   /* Variable declaration/allocation. */
   DATA_TYPE float_n;
-  POLYBENCH_2D_ARRAY_DECL(data,DATA_TYPE,M,N,m,n);
-  POLYBENCH_2D_ARRAY_DECL(symmat,DATA_TYPE,M,M,m,m);
-  POLYBENCH_1D_ARRAY_DECL(mean,DATA_TYPE,M,m);
-  POLYBENCH_1D_ARRAY_DECL(stddev,DATA_TYPE,M,m);
+  POLYBENCH_2D_ARRAY_DECL(data,DATA_TYPE __attribute((annotate("scalar(range(-512, 512) final)"))),M,N,m,n);
+  POLYBENCH_2D_ARRAY_DECL(symmat,DATA_TYPE __attribute((annotate("target('corr') scalar()"))),M,M,m,m);
+  POLYBENCH_1D_ARRAY_DECL(mean,DATA_TYPE __attribute((annotate("scalar()"))),M,m);
+  POLYBENCH_1D_ARRAY_DECL(stddev,DATA_TYPE __attribute((annotate("scalar(range(1,4096) final)"))),M,m);
 
   /* Initialize array(s). */
   init_array (m, n, &float_n, POLYBENCH_ARRAY(data));

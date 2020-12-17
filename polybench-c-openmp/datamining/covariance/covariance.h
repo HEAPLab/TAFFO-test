@@ -9,21 +9,26 @@
 # define COVARIANCE_H
 
 /* Default to STANDARD_DATASET. */
-# if !defined(MINI_DATASET) && !defined(SMALL_DATASET) && !defined(LARGE_DATASET) && !defined(EXTRALARGE_DATASET)
-#  define STANDARD_DATASET
+# if !defined(MINI_DATASET) && !defined(MEDIUM_DATASET) && !defined(LARGE_DATASET) && !defined(EXTRALARGE_DATASET)
+#  define LARGE_DATASET
 # endif
 
 /* Do not define anything if the user manually defines the size. */
 # if !defined(N) && !defined(M)
 /* Define the possible dataset sizes. */
 #  ifdef MINI_DATASET
-#   define N 32
-#   define M 32
+#   define N 80
+#   define M 100
 #  endif
 
 #  ifdef SMALL_DATASET
 #   define N 500
 #   define M 500
+#  endif
+
+#  ifdef MEDIUM_DATASET
+#   define M 240
+#   define N 240
 #  endif
 
 #  ifdef STANDARD_DATASET /* Default if unspecified. */
@@ -32,8 +37,8 @@
 #  endif
 
 #  ifdef LARGE_DATASET
-#   define N 2000
-#   define M 2000
+#   define N 1200
+#   define M 1400
 #  endif
 
 #  ifdef EXTRALARGE_DATASET
@@ -47,7 +52,7 @@
 
 # ifndef DATA_TYPE
 #  define DATA_TYPE double
-#  define DATA_PRINTF_MODIFIER "%0.2lf "
+#  define DATA_PRINTF_MODIFIER "%0.16lf "
 # endif
 
 
