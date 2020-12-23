@@ -1,8 +1,12 @@
 ///TAFFO_TEST_ARGS -disable-vra
 
-float oven [[clang::annotate("range -3000 3000")]] (int stuff [[clang::annotate("range -3000 3000")]], int baked, float cherry) 
+//expected to fail at the moment
+#pragma taffo oven "range -3000 3000"
+float oven (int stuff, int baked, float cherry) 
 {
-  float cake [[clang::annotate("range -3000 3000")]] = baked + stuff;
+  #pragma taffo stuff oven "range -3000 3000"
+  #pragma taffo cake oven "range -3000 3000"
+  float cake  = baked + stuff;
   return cake + cherry;
 }
 

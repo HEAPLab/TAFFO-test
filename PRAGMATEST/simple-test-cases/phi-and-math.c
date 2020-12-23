@@ -16,9 +16,12 @@ typedef struct RGB {
 
 
 int main()  {
-    double r __attribute((annotate("scalar(range(0,256)) target('r')")));
-    double g __attribute((annotate("scalar(range(0,256))")));
-    double b __attribute((annotate("scalar(range(0,256))")));
+    #pragma taffo r main "scalar(range(0,256)) target('r')"
+    #pragma taffo g main "scalar(range(0,256))"
+    #pragma taffo b main "scalar(range(0,256))"
+    double r;
+    double g;
+    double b;
 
     int y, cr, cb;
     scanf("%d", &y);

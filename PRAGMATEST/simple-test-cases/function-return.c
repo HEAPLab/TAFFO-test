@@ -1,8 +1,8 @@
 ///TAFFO_TEST_ARGS -Xvra -propagate-all
 #include <stdio.h>
 
-
-float fun(void) __attribute((annotate("scalar(range(-10, 10))")))
+#pragma taffo fun "scalar(range(-10, 10))"
+float fun(void) 
 {
   float t;
   scanf("%f", &t);

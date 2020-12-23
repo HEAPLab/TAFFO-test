@@ -3,7 +3,8 @@
 
 float fpextfptrunc(__attribute((annotate("scalar(range(-32767, 32767))"))) float a, __attribute((annotate("scalar(range(-32767, 32767))"))) double b)
 {
-  __attribute((annotate("scalar(range(-32767, 32767))"))) double c = 123.0;
+  #pragma taffo c fpextfptrunc "scalar(range(-32767, 32767))"
+  double c = 123.0;
   c += a;
   return (float)c + b;
 }

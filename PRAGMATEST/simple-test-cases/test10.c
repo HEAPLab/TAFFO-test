@@ -2,8 +2,10 @@
 
 int main(int argc, char *argv[])
 {
-  float __attribute__((annotate("scalar(range(0, 3))"))) a = 3;
-  float __attribute__((annotate("scalar(range(0, 4))"))) b = 4;
+  #pragma taffo a main "scalar(range(0, 3))"
+  float  a = 3;
+  #pragma taffo b main "scalar(range(0, 4))"
+  float b = 4;
   float c = a * b;
   printf("%f", c);
   return 0;

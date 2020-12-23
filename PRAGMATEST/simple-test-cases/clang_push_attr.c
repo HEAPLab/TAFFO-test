@@ -2,15 +2,15 @@
 int main()
 {
     float out;
-    #pragma clang attribute push( __attribute__((annotate("scalar(range(-3000, 3000) final)"))) , apply_to = variable)
+    #pragma taffo a main "scalar(range(-3000, 3000) final)"
+    #pragma taffo b main "scalar(range(-3000, 3000) final)"
     float a=10;
     float b;
-    #pragma clang attribute pop
     
-    #pragma clang attribute push( __attribute__((annotate("scalar(range(-255, 255) final)"))) , apply_to = variable)
+    #pragma taffo c main "scalar(range(-255, 255) final)"
+    #pragma taffo d main "scalar(range(-255, 255) final)"
     float c = 2.1024;
     float d;
-    #pragma clang attribute pop
     
     b = a * 0.21024;
     b /= 2;

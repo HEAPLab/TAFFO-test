@@ -7,7 +7,8 @@ int main(void) {
 	
   	#pragma omp parallel
 	{
-		__attribute__((annotate("no_float"))) float x=0.333333;		
+		#pragma taffo x main "no_float"
+		float x=0.333333;		
 		a = x + omp_get_thread_num();
   		printf("thread %f\n", a);
 	}

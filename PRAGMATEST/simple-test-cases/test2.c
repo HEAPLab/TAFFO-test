@@ -6,7 +6,8 @@ float global;
 float test(float param, int notafloat)
 {
   int notafloat2;
-  float local __attribute((annotate("scalar(range(-1000000000, 1000000000))")));
+  #pragma taffo local test "scalar(range(-1000000000, 1000000000))"
+  float local;
   
   local = 134217728.0;
   local *= param;

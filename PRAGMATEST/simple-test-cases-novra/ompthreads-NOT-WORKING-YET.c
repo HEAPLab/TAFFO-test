@@ -1,0 +1,15 @@
+///TAFFO_TEST_ARGS -disable-vra
+#include "omp.h"
+#include <stdio.h>
+
+int main(void) {
+	float a;
+	
+  	#pragma omp parallel
+	{
+		#pragma taffo x main "no_float"
+		float x=0.333333;		
+		a = x + omp_get_thread_num();
+  		printf("thread %f\n", a);
+	}
+}

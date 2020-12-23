@@ -2,18 +2,21 @@
 #include <stdio.h>
 #include <math.h>
 
-float  __attribute((annotate("scalar()"))) global = 33.333;
+#pragma taffo global "scalar()"
+float  global = 33.333;
 
-float fun(float x __attribute((annotate("scalar()"))),
-          float y __attribute((annotate("scalar()")))){
+float fun(float x ,float y){
+    #pragma taffo x fun "scalar()"
+    #pragma taffo y fun "scalar()"
     float local;
     local = x * y + global;
     global++;
     return local;
 }
 
-int funInt(float x __attribute((annotate("scalar()"))),
-           float y __attribute((annotate("scalar()")))){
+int funInt(float x ,float y ){
+    #pragma taffo x funInt "scalar()"
+    #pragma taffo y funInt "scalar()"
     int local;
     local = x * y + global;
     global*=1.098;
@@ -21,8 +24,10 @@ int funInt(float x __attribute((annotate("scalar()"))),
 }
 
 int main() {
-    float __attribute((annotate("scalar()"))) a=10.2049;
-    float __attribute((annotate("target('b') scalar()"))) b=10.1024;
+    #pragma taffo a main "scalar()"
+    float a=10.2049;
+    #pragma taffo b main "target('b') scalar()"
+    float  b=10.1024;
     int c = 2;
 
 

@@ -1,11 +1,11 @@
 ///TAFFO_TEST_ARGS
 #include <stdio.h>
 
+#pragma taffo glob "scalar()"
+float glob;
 
-float glob __attribute((annotate("scalar()")));
-
-
-float *fun(void) __attribute((annotate("scalar()")))
+#pragma taffo fun "scalar()"
+float *fun(void)
 {
   return &glob;
 }
@@ -13,8 +13,10 @@ float *fun(void) __attribute((annotate("scalar()")))
 
 int main()
 {
-  float *x __attribute((annotate("target('x') scalar()"))) = fun();
-  float t __attribute((annotate("scalar(range(-10, 10) disabled)")));
+  #pragma taffo x main "target('x') scalar()"
+  float *x = fun();
+  #pragma taffo t main "scalar(range(-10, 10) disabled)"
+  float t ;
   scanf("%f", &t);
   *x = t;
   printf("%f\n", *x);

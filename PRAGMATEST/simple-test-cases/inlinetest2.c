@@ -2,13 +2,15 @@
 #include <stdio.h>
 
 
-float hello(__attribute__((annotate("scalar()"))) float *abc) __attribute__((always_inline)) {
+float hello( float *abc) __attribute__((always_inline)) {
+  #pragma taffo abc hello "scalar()"
   abc[5] += (float)5.0;
 }
 
 
 int main(int argc, char *argv[]) {
-	__attribute__((annotate("scalar()"))) float test[10];
+	#pragma taffo test main "scalar()"
+	float test[10];
 	for (int i=0; i<10; i++)
 	  test[i] = 123.0;
 	hello(test);

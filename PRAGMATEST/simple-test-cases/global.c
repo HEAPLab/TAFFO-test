@@ -1,8 +1,10 @@
 ///TAFFO_TEST_ARGS -Xvra -propagate-all
 #include <stdio.h>
 
-double vec[10] __attribute((annotate("scalar()")));
-double scal __attribute((annotate("scalar()")));
+#pragma taffo vec "scalar()"
+#pragma taffo scal "scalar()"
+double vec[10];
+double scal;
 
 
 int main(int argc, char *argv[])

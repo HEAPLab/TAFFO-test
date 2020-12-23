@@ -8,7 +8,8 @@
 
 int main()
 {
-  __attribute__((annotate("scalar(range(-3000, 3000) final)"))) float v[N];
+  #pragma taffo v main "scalar(range(-3000, 3000) final)"
+  float v[N];
 
   for (int i=0;i<N;i++)
     v[i]= (i%(N/30)) ? 0 : 1;

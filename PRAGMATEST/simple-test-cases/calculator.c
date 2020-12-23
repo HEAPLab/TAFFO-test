@@ -3,8 +3,10 @@
 
 
 #define DO(op) { \
-  float __attribute__((annotate("scalar(range(-3000, +3000) final)"))) tmp1; \
-  float __attribute__((annotate("scalar(range(-3000, +3000) final)"))) tmp2; \
+  _Pragma("taffo tmp1 main \"scalar(range(-3000, +3000) final) \"")             \
+  float  tmp1; \
+  _Pragma("taffo tmp2 main \"scalar(range(-3000, +3000) final) \"")             \
+  float  tmp2; \
   tmp2 = stack[--sp]; \
   tmp1 = stack[--sp]; \
   stack[sp++] = tmp1 op tmp2; \
@@ -15,7 +17,8 @@ int main(int argc, char *argv[])
 {
   float tmp;
   char buffer[256];
-  float __attribute__((annotate("scalar(range(-3000, +3000))"))) stack[32];
+  #pragma taffo stack main "scalar(range(-3000, +3000))"
+  float stack[32];
   int sp = 0;
   
   while (1) {

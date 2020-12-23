@@ -14,9 +14,11 @@ float test(float a)
 
 int main(int argc, char *argv[])
 {
-  float a __attribute((annotate("target('a') scalar(range(-128, 128) disabled)")));
+	#pragma taffo a main "target('a') scalar(range(-128, 128) disabled)"
+  float a;
   scanf("%f", &a);
-  float b __attribute((annotate("target('a') scalar()"))) = a*2;
+  #pragma taffo b main "target('a') scalar()"
+  float b= a*2;
   printf("%f\n", test(b));
   return 0;
 }

@@ -11,11 +11,16 @@
 #include <stdio.h>
 
 int main(int argc, char *argv[]) {
-  float p1 __attribute((annotate("scalar()")));
-  float p2 __attribute((annotate("scalar()")));
-  float p3 __attribute((annotate("scalar(range(-3000, 3000) disabled final)")));
-  float sPeak __attribute((annotate("scalar()")));
-  float sAll __attribute((annotate("scalar()")));
+  #pragma taffo p1 main "scalar()"
+  float p1;
+  #pragma taffo p2 main "scalar()"
+  float p2;
+  #pragma taffo p3 main "scalar(range(-3000, 3000) disabled final)"
+  float p3;
+  #pragma taffo sPeak main "scalar()"
+  float sPeak;
+  #pragma taffo sAll main "scalar()"
+  float sAll;
   int cPeak, cAll;
   
   p3 = p2 = p1 = -1;

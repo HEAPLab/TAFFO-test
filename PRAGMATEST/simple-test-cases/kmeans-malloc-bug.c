@@ -7,6 +7,10 @@
 
 #define ANNOTATION_RGBPIXEL         "struct[scalar(range(0,255)),scalar(range(0,255)),scalar(range(0,255)),void,scalar(range(0,1))]"
 #define ANNOTATION_RGBIMAGE         "struct[void,void," ANNOTATION_RGBPIXEL "]"
+#define SUB(x) _Pragma (#x)
+#define DO_PRAGMA(x) SUB(x) 
+DO_PRAGMA(taffo image main ANNOTATION_RGBIMAGE)
+
 
 typedef struct {
    float r;
@@ -25,7 +29,8 @@ typedef struct {
 
 int main (int argc, const char* argv[])
 {
-	RgbImage __attribute((annotate(ANNOTATION_RGBIMAGE))) image;
+
+	RgbImage  image;
 
 	image.w = 10;
 	image.h = 20;

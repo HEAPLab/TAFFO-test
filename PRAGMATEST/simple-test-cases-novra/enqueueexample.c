@@ -1,0 +1,20 @@
+///TAFFO_TEST_ARGS -disable-vra
+
+
+
+float example(float a, float b, float c, float d)
+{
+  float x = 1.0;
+  #pragma taffo y example "range -10 10"
+  float y  = 2.0;
+  float z =3.0;
+
+  return (x * (y / z)) * x;
+}
+
+
+int main(int argc, char *argv[])
+{
+  printf("%f\n", example(1, 2, 3, 4));
+}
+

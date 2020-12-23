@@ -102,34 +102,36 @@ int randomInRange(int a, int b)
 #define TRIES 1000
 
 
-#define gen_perform(op) {                                     \
-  printf("operation: %s\n", #op);                             \
-                                                              \
-  uint64_t samples[TRIES];                                    \
-                                                              \
-  for (int t=0; t<TRIES; t++) {                               \
-    timerStart();                                             \
-    for (int i=0; i<N; i+=2) {                                \
-      buf[i] = buf[i] op buf[i+1];                            \
-    }                                                         \
-    __attribute__((annotate("scalar(range(-3000, 3000))"))) float sync = 0.0;   \
-    for (int i=0; i<N; i++)                                   \
-      sync += buf[i];                                         \
-    samples[t] = timerStop();                                 \
-  }                                                           \
-                                                              \
-  uint64_t avg = 0;                                           \
-  for (int t=PREHEAT; t<TRIES; t++) {                         \
-    avg += samples[t];                                        \
-  }                                                           \
-  avg /= TRIES - PREHEAT;                                     \
-  printf("avg time (ns): %" PRIu64 "\n", avg);                \
+#define gen_perform(op) {                                        \
+  printf("operation: %s\n", #op);                                \
+                                                                 \
+  uint64_t samples[TRIES];                                       \
+                                                                 \
+  for (int t=0; t<TRIES; t++) {                                  \
+    timerStart();                                                \
+    for (int i=0; i<N; i+=2) {                                   \
+      buf[i] = buf[i] op buf[i+1];                               \
+    }                                                            \
+    _Pragma("taffo sync main \"scalar(range(-3000, 3000))\"")             \
+    float sync = 0.0;                                            \
+    for (int i=0; i<N; i++)                                      \
+      sync += buf[i];                                            \
+    samples[t] = timerStop();                                    \
+  }                                                              \
+                                                                 \
+  uint64_t avg = 0;                                              \
+  for (int t=PREHEAT; t<TRIES; t++) {                            \
+    avg += samples[t];                                           \
+  }                                                              \
+  avg /= TRIES - PREHEAT;                                        \
+  printf("avg time (ns): %" PRIu64 "\n", avg);                   \
 }
 
 
 int main(int argc, char *argv[])
 {
-  __attribute__((annotate("scalar(range(-3000, 3000))"))) float buf[N*2];
+  #pragma taffo buf main "scalar(range(-3000, 3000))"
+  float buf[N*2];
 
   for (int i=0; i<N; i++) {
     buf[i] = (float)randomInRange(0, 0x100) / 32768.0;

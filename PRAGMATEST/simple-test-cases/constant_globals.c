@@ -1,17 +1,20 @@
 ///TAFFO_TEST_ARGS -Xvra -propagate-all
 #include <stdio.h>
 
-static float __attribute((annotate("scalar()"))) k[5] =
+#pragma taffo k "scalar()"
+static float  k[5] =
   {1, 2, 3, 4, 5};
 
-static float __attribute((annotate("scalar()"))) kx[][3] =
+#pragma taffo kx "scalar()"
+static float  kx[][3] =
     {
       { -1, -2, -1 },
       {  0,  0,  0 },
       {  1,  2,  1 }
     } ;
 
-static float __attribute((annotate("scalar()"))) ky[][3] =
+#pragma taffo ky "scalar()"
+static float ky[][3] =
     {
       { -1, 0, 1 },
       { -2, 0, 2 },

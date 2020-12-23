@@ -8,7 +8,8 @@ float test(float a)
 
 int main(int argc, char *argv[])
 {
-  float a __attribute((annotate("target('a') scalar(range(-128, 128) disabled)")));
+	#pragma taffo a main "target('a') scalar(range(-128, 128) disabled)"
+  float a;
   scanf("%f", &a);
   printf("%f\n", test(a));
   return 0;

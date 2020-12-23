@@ -4,7 +4,8 @@
 
 int main(int argc, char *argv[])
 {
-  float *test __attribute__((annotate("scalar(range(-1, 1))")));
+  #pragma taffo test main "scalar(range(-1, 1))"
+  float *test;
   test = malloc(10 * sizeof(float));
   for (int i=0; i<10; i++) {
     float tmp;

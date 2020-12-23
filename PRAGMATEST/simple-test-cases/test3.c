@@ -14,7 +14,8 @@ float random(void)
 
 float test(int p1, int p2, int p3, float num1, float num2, float num3)
 {
-  float phi __attribute((annotate("range -32767 32767")));
+  #pragma taffo phi test "range -32767 32767"
+  float phi;
   
   if (p1)
     phi = num3;
@@ -32,7 +33,8 @@ float test(int p1, int p2, int p3, float num1, float num2, float num3)
 
 float test2(int p1)
 {
-  float phi __attribute((annotate("range -32767 32767"))) = 0.0;
+  #pragma taffo phi test2 "range -32767 32767"
+  float phi  = 0.0;
   
   if (p1)
     phi += random();
