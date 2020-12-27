@@ -73,16 +73,16 @@ void kernel_covariance(int m, int n,
     for (j = 0; j < _PB_M; j++)
       {
         mean[j] = 0.0;
-	for (i = 0; i < _PB_N; i++)
-	  mean[j] += data[i][j];
-	mean[j] /= float_n;
+        for (i = 0; i < _PB_N; i++)
+          mean[j] += data[i][j];
+        mean[j] /= float_n;
       }
       
     /* Center the column vectors. */
     #pragma omp for private (j)
     for (i = 0; i < _PB_N; i++)
       for (j = 0; j < _PB_M; j++)
-	data[i][j] -= mean[j];
+        data[i][j] -= mean[j];
       
     /* Calculate the m * m covariance matrix. */
     #pragma omp for private (j2, i)
@@ -105,10 +105,10 @@ int main(int argc, char** argv)
   int m = M;
 
   /* Variable declaration/allocation. */
-  DATA_TYPE __attribute((annotate("target('float_n') scalar(range(2, 300))"))) float_n;
-  POLYBENCH_2D_ARRAY_DECL(data,DATA_TYPE __attribute((annotate("target('data') scalar(range(-1127274309028, +1127274309028) final)"))),M,N,m,n);
-  POLYBENCH_2D_ARRAY_DECL(symmat,DATA_TYPE __attribute((annotate("target('cov') scalar(range(-1127274309028, +1127274309028) final)"))),M,M,m,m);
-  POLYBENCH_1D_ARRAY_DECL(mean,DATA_TYPE __attribute((annotate("target('mean') scalar()"))),M,m);
+  DATA_TYPE __attribute((annotate("target('float_n') scalar()) final"))) float_n;
+  POLYBENCH_2D_ARRAY_DECL(data,DATA_TYPE __attribute((annotate("target('data') scalar(range(- " PB_XSTR(N*N) " , " PB_XSTR(N*N)")) final"))),M,N,m,n);
+  POLYBENCH_2D_ARRAY_DECL(symmat,DATA_TYPE __attribute((annotate("target('cov') scalar(range(- " PB_XSTR(N*N*N) " , " PB_XSTR(N*N*N)")) final"))),M,M,m,m);
+  POLYBENCH_1D_ARRAY_DECL(mean,DATA_TYPE __attribute((annotate("target('mean') scalar(range(- " PB_XSTR(N*N*N*N) " , " PB_XSTR(N*N*N*N)")) final"))),M,m);
   
   /* Initialize array(s). */
   init_array (m, n, &float_n, POLYBENCH_ARRAY(data));
