@@ -28,9 +28,9 @@ void radix2DitCooleyTykeyFft(int K,
 			     Complex* f )
 {
 	//function parameters attributes
-	DO_PRAGMA(indices radix2DitCooleyTykeyFft ANNOTATION_RANGE_N)
-	DO_PRAGMA(x radix2DitCooleyTykeyFft "errtarget('x') " ANNOTATION_COMPLEX(,))
-	DO_PRAGMA(f radix2DitCooleyTykeyFft "errtarget('f') " ANNOTATION_COMPLEX(,))
+	DO_PRAGMA(taffo indices radix2DitCooleyTykeyFft ANNOTATION_RANGE_N)
+	DO_PRAGMA(taffo x       radix2DitCooleyTykeyFft "errtarget('x') " ANNOTATION_COMPLEX(,))
+	DO_PRAGMA(taffo f       radix2DitCooleyTykeyFft "errtarget('f') " ANNOTATION_COMPLEX(,))
   /* This FFT implementation is buggy
    * x[0] should be < x[all i != 0] because the input is all positive, except it isn't
    * The actual maximum value is the integration of all values times 4 for some reason */
@@ -43,8 +43,8 @@ void radix2DitCooleyTykeyFft(int K,
 	int oI ;
 
 	#pragma taffo fftSin radix2DitCooleyTykeyFft "scalar()"
-	float fftSin;
 	#pragma taffo fftCos radix2DitCooleyTykeyFft "scalar()"
+	float fftSin;
 	float fftCos;
 
 	DO_PRAGMA(taffo t radix2DitCooleyTykeyFft ANNOTATION_COMPLEX_RANGE)

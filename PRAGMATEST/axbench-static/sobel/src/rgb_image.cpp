@@ -105,8 +105,8 @@ int Image::loadRgbImage(std::string filename)
 
 int Image::saveRgbImage(std::string outFilename, float  scale) 
 {
+	#pragma taffo scale saveRgbImage "errtarget('out') scalar()" 
 
-	#pragma taffo scale saveRgbImage "errtarget('out') scalar()" // range(362,362)
 	if(DEBUG)
 	{
 		std::cout << "# Saving into " << outFilename << " ..." << std::endl ;

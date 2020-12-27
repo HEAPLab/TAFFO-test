@@ -60,9 +60,9 @@
               }                                                                \
               else                                                             \
               {                                                                \
-                _Pragma("taffo adj1 tri_tri_intersect \"scalar(range(-768000000,-1e+2) final)\"") \
-                float adj1 = sub1;                                             \
-                isect0=VV0+(VV1-VV0)*D0/(adj1+0.00001);                        \
+                _Pragma("taffo adj11 tri_tri_intersect \"scalar(range(-768000000,-1e+2) final)\"") \
+                float adj11 = sub1;                                             \
+                isect0=VV0+(VV1-VV0)*D0/(adj11+0.00001);                        \
               }                                                                \
               if (sub2 >= 0.0f)                                                \
               {                                                                \
@@ -72,9 +72,9 @@
               }                                                                \
               else                                                             \
               {                                                                \
-                _Pragma("taffo adj2 tri_tri_intersect \"scalar(range(-768000000,-1e+2) final)\"") \
-                float adj2 = sub2;                                             \
-                isect1=VV0+(VV2-VV0)*D0/(adj2+0.00001);                        \
+                _Pragma("taffo adj22 tri_tri_intersect \"scalar(range(-768000000,-1e+2) final)\"") \
+                float adj22 = sub2;                                             \
+                isect1=VV0+(VV2-VV0)*D0/(adj22+0.00001);                        \
               }                                                                \
 }
 

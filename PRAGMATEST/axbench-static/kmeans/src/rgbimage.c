@@ -52,7 +52,7 @@ int loadRgbImage(const char* fileName, RgbImage* image, float  scale) {
 
 	//function parameters pragmas
 	DO_PRAGMA(taffo image loadRgbImage ANNOTATION_RGBIMAGE)
-	#pragma taffo scale loadRgbImage "scalar()"
+	#pragma   taffo scale loadRgbImage "scalar()"
 	int c;
 	int i;
 	int j;
@@ -157,8 +157,8 @@ int loadRgbImage(const char* fileName, RgbImage* image, float  scale) {
 int saveRgbImage(RgbImage*  image, const char* fileName, float  scale) {
 
 	//function parameters pragmas
-	DO_PRAGMA(taffo image saveRgbImage ANNOTATION_RGBPIXEL)
-	#pragma taffo scale saveRgbImage "scalar()"
+	DO_PRAGMA(taffo image saveRgbImage ANNOTATION_RGBIMAGE)
+	#pragma   taffo scale saveRgbImage "scalar()"
 	int i;
 	int j;
 	FILE *fp;
@@ -207,7 +207,7 @@ void freeRgbImage(RgbImage* image) {
 
 void makeGrayscale(RgbImage* image) {
 
-	DO_PRAGMA(taffo image makeGrayscale ANNOTATION_RGBPIXEL)
+	DO_PRAGMA(taffo image makeGrayscale ANNOTATION_RGBIMAGE)
 
 	int i;
 	int j;

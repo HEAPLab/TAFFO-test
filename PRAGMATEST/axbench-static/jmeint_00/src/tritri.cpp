@@ -39,42 +39,42 @@
 #define SORT(a,b)       \
              if(a>b)    \
              {          \
-              _Pragma("taffo c tri_tri_intersect \"scalar()\"") \
+               DO_PRAGMA(taffo c tri_tri_intersect "scalar()") \
                float c; \
                c=a;     \
                a=b;     \
                b=c;     \
              }
 
-#define ISECT(VV0,VV1,VV2,D0,D1,D2,isect0,isect1) \
+#define ISECT(VV0,VV1,VV2,D0,D1,D2,isect0,isect1)          \
 {                                                                              \
-              _Pragma("taffo sub1 tri_tri_intersect \"scalar()\"")             \
-              _Pragma("taffo sub2 tri_tri_intersect \"scalar()\"")             \
+              DO_PRAGMA(taffo sub1 tri_tri_intersect "scalar()")             \
+              DO_PRAGMA(taffo sub2 tri_tri_intersect "scalar()")             \
               float  sub1 = D0-D1;                                             \
               float  sub2 = D0-D2;                                             \
               if (sub1 >= 0.0f)                                                \
               {                                                                \
-                _Pragma("taffo adj1 tri_tri_intersect \"scalar(range(1e-3, 23.522400) final)\"")  \
-                float  adj1 = sub1;                                                               \
-                isect0=VV0+(VV1-VV0)*D0/(adj1+0.00001);                                           \
+              DO_PRAGMA(taffo adj1 tri_tri_intersect "scalar(range(1e-3, 23.522400) final)")             \
+                float  adj1 = sub1;                                            \
+                isect0=VV0+(VV1-VV0)*D0/(adj1+0.00001);                        \
               }                                                                \
               else                                                             \
               {                                                                \
-                _Pragma("taffo adj1 tri_tri_intersect \"scalar(range(-23.522400, -1e-3) final)\"") \
-                float adj1 = sub1; \
-                isect0=VV0+(VV1-VV0)*D0/(adj1+0.00001);                                  \
+                DO_PRAGMA(taffo adj11 tri_tri_intersect "scalar(range(-23.522400, -1e-3) final)") \
+                float adj11 = sub1;                                             \
+                isect0=VV0+(VV1-VV0)*D0/(adj11+0.00001);                        \
               }                                                                \
               if (sub2 >= 0.0f)                                                \
               {                                                                \
-                _Pragma("taffo adj2 tri_tri_intersect \"scalar(range(1e-3, 23.522400) final)\"") \
-                float adj2 = sub2; \
-                isect1=VV0+(VV2-VV0)*D0/(adj2+0.00001);                                  \
+                DO_PRAGMA(taffo adj2 tri_tri_intersect "scalar(range(1e-3, 23.522400) final)") \
+                float adj2 = sub2;                                             \
+                isect1=VV0+(VV2-VV0)*D0/(adj2+0.00001);                        \
               }                                                                \
               else                                                             \
               {                                                                \
-                _Pragma("taffo adj2 tri_tri_intersect \"scalar(range(-23.522400, -1e-3) final)\"")  \
-                float adj2 = sub2; \
-                isect1=VV0+(VV2-VV0)*D0/(adj2+0.00001);                                  \
+                float adj22 = sub2;                                             \
+                DO_PRAGMA(taffo adj22 tri_tri_intersect "scalar(range(-23.522400, -1e-3) final)") \
+                isect1=VV0+(VV2-VV0)*D0/(adj22+0.00001);                        \
               }                                                                \
 }
 
@@ -139,15 +139,15 @@
 
 #define EDGE_AGAINST_TRI_EDGES(V0,V1,U0,U1,U2) \
 {                                              \
-  _Pragma("taffo Ax coplanar_tri_tri \"scalar()\"") \
-  _Pragma("taffo Ay coplanar_tri_tri \"scalar()\"") \
-  _Pragma("taffo Bx coplanar_tri_tri \"scalar()\"") \
-  _Pragma("taffo By coplanar_tri_tri \"scalar()\"") \
-  _Pragma("taffo Cx coplanar_tri_tri \"scalar()\"") \
-  _Pragma("taffo Cy coplanar_tri_tri \"scalar()\"") \
-  _Pragma("taffo e coplanar_tri_tri \"errtarget('e') scalar()\"") \
-  _Pragma("taffo d coplanar_tri_tri \"errtarget('d') scalar()\"") \
-  _Pragma("taffo f coplanar_tri_tri \"errtarget('f') scalar()\"") \
+  DO_PRAGMA(taffo Ax coplanar_tri_tri "scalar()")               \
+  DO_PRAGMA(taffo Ay coplanar_tri_tri "scalar()")               \
+  DO_PRAGMA(taffo Bx coplanar_tri_tri "scalar()")               \
+  DO_PRAGMA(taffo By coplanar_tri_tri "scalar()")               \
+  DO_PRAGMA(taffo Cx coplanar_tri_tri "scalar()")               \
+  DO_PRAGMA(taffo Cy coplanar_tri_tri "scalar()")               \
+  DO_PRAGMA(taffo e coplanar_tri_tri "errtarget('e') scalar()") \
+  DO_PRAGMA(taffo d coplanar_tri_tri "errtarget('d') scalar()") \
+  DO_PRAGMA(taffo f coplanar_tri_tri "errtarget('f') scalar()") \
   float Ax, Ay; \
   float Bx, By; \
   float Cx, Cy; \
@@ -164,14 +164,14 @@
 
 #define POINT_IN_TRI(V0,U0,U1,U2)           \
 {                                           \
-  _Pragma("taffo a coplanar_tri_tri \"scalar()\"") \
-  _Pragma("taffo b coplanar_tri_tri \"scalar()\"") \
-  _Pragma("taffo c coplanar_tri_tri \"scalar()\"") \
-  float a, b, c; \
-  _Pragma("taffo d0 coplanar_tri_tri \"scalar()\"") \
-  _Pragma("taffo d1 coplanar_tri_tri \"scalar()\"") \
-  _Pragma("taffo d2 coplanar_tri_tri \"scalar()\"") \
-  float d0, d1, d2;                     \
+  DO_PRAGMA(taffo a  coplanar_tri_tri "scalar()") \
+  DO_PRAGMA(taffo b  coplanar_tri_tri "scalar()") \
+  DO_PRAGMA(taffo c  coplanar_tri_tri "scalar()") \
+  DO_PRAGMA(taffo d0 coplanar_tri_tri "scalar()") \
+  DO_PRAGMA(taffo d1 coplanar_tri_tri "scalar()") \
+  DO_PRAGMA(taffo d2 coplanar_tri_tri "scalar()") \
+  float a, b, c;                            \
+  float d0, d1, d2;                         \
   /* is T1 completly inside T2? */          \
   /* check if V0 is inside tri(U0,U1,U2) */ \
   a=U1[i1]-U0[i1];                          \
@@ -188,8 +188,8 @@
   b=-(U0[i0]-U2[i0]);                       \
   c=-a*U2[i0]-b*U2[i1];                     \
   d2=a*V0[i0]+b*V0[i1]+c;                   \
-  _Pragma("taffo d0d1 coplanar_tri_tri \"errtarget('d0*d1') scalar()\"")  \
-  _Pragma("taffo d0d2 coplanar_tri_tri \"errtarget('d0*d2') scalar()\"")  \
+  DO_PRAGMA(taffo d0d1 coplanar_tri_tri "errtarget('d0*d1') scalar()") \
+  DO_PRAGMA(taffo d0d2 coplanar_tri_tri "errtarget('d0*d2') scalar()") \
   float d0d1, d0d2; \
   d0d1 = d0*d1; d0d2 = d0*d2; \
   PRINT_INSTR("d0*d1=%a d0*d2=%a\n", d0d1, d0d2); \
@@ -259,6 +259,7 @@ int tri_tri_intersect(float V0[3], float V1[3], float V2[3],
 		      float *res, int *output)
 {
   //function parameters pragmas
+  
   #pragma taffo V0  tri_tri_intersect "scalar()"
   #pragma taffo V1  tri_tri_intersect "scalar()"
   #pragma taffo V2  tri_tri_intersect "scalar()"
@@ -291,7 +292,8 @@ int tri_tri_intersect(float V0[3], float V1[3], float V2[3],
   #pragma taffo up2    tri_tri_intersect "scalar()"
   #pragma taffo b      tri_tri_intersect "scalar()"
   #pragma taffo c      tri_tri_intersect "scalar()"
-  #pragma taffo max    tri_tri_intersect "scalar()"    
+  #pragma taffo max    tri_tri_intersect "scalar()"  
+   
   float E1[3],E2[3];
   float N1[3],N2[3],d1,d2;
   float du0,du1,du2,dv0,dv1,dv2;
@@ -306,7 +308,8 @@ int tri_tri_intersect(float V0[3], float V1[3], float V2[3],
   #pragma taffo du0du1 tri_tri_intersect "errtarget('du0du1') scalar()"
   #pragma taffo du0du2 tri_tri_intersect "errtarget('du0du2') scalar()"
   #pragma taffo dv0dv1 tri_tri_intersect "errtarget('dv0dv1') scalar()"
-  #pragma taffo dv0dv2 tri_tri_intersect "errtarget('dv0dv2') scalar()"
+  #pragma taffo dv0dv2 tri_tri_intersect "errtarget('dv0dv1') scalar()"
+
   float du0du1;
   float du0du2;
   float dv0dv1;
@@ -577,7 +580,7 @@ int NoDivTriTriIsect(float V0[3],float V1[3],float V2[3],
 #define SORT2(a,b,smallest)       \
              if(a>b)       \
              {             \
-              _Pragma("taffo c SORT2 \"scalar()\"") \
+              DO_PRAGMA(taffo c tri_tri_intersect "scalar") \
                float c;    \
                c=a;        \
                a=b;        \

@@ -10,6 +10,9 @@
 #include <cstdlib>
 #include <iostream>
 
+#define SUBP(x) _Pragma (#x)
+#define DO_PRAGMA(x) SUBP(x)
+
 //#define INSTRUMENT
 #ifdef INSTRUMENT
 #define PRINT_INSTR(...) fprintf(stderr, __VA_ARGS__)

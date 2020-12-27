@@ -21,8 +21,8 @@ int main ( int argc, const char* argv[])
 	float s = 0;
 
 	// Source and destination image
-	DO_PRAGMA(taffo srcImage main ANNOTATION_IMAGE_RANGE)
-	DO_PRAGMA(taffo dstImage main ANNOTATION_IMAGE)
+	DO_PRAGMA(taffo srcImage    main ANNOTATION_IMAGE_RANGE)
+	DO_PRAGMA(taffo dstImage    main ANNOTATION_IMAGE)
 	DO_PRAGMA(taffo srcImagePtr main ANNOTATION_IMAGE_RANGE)
 	DO_PRAGMA(taffo dstImagePtr main ANNOTATION_IMAGE)
 	Image  srcImage;

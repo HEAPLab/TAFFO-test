@@ -50,7 +50,7 @@ int readCell(FILE *fp, char* w) {
 
 int loadRgbImage(const char* fileName, RgbImage*  image, float  scale) {
 	//function parameters pragmas
-	DO_PRAGMA(taffo image loadRgbImage ANNOTATION_RGBPIXEL)
+	DO_PRAGMA(taffo image loadRgbImage ANNOTATION_RGBIMAGE)
 	#pragma   taffo scale loadRgbImage "scalar()"
 
 	int c;

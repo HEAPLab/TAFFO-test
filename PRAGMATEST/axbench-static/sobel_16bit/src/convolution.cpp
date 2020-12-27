@@ -47,6 +47,7 @@ float convolve(float w[][3] ,float k[][3] )
 
 float sobel(float w[][3])
 {
+	//function parameters pragmas
 	#pragma taffo w sobel "scalar()"
 
 	#pragma taffo sx sobel "scalar()"

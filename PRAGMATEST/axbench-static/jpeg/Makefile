@@ -11,6 +11,7 @@ comma :=,
 OX          :=# -O3
 
 CFLAGS		:= -Wall -Wnarrowing -std=c++11
+PFLAGS      := -c -Xclang -load -Xclang /usr/local/lib/TaffoPlugin.so -Xclang -add-plugin -Xclang taffo-plugin 
 LFLAGS		:= -lboost_regex
 HEADERS    	:= src
 INCLUDE 	:= -I${HEADERS} 
@@ -42,7 +43,7 @@ $(MODULE): $(OBJ_FLOAT) $(OBJ_FIX) obj/main.err.ll
 	$(LD) $(OBJ_FIX) $(LFLAGS) -o bin/$@.fixp
 
 obj/%.ll : src/%.c
-	$(CC) -S -emit-llvm $(MIOSIX_FLAGS) $(CFLAGS) $(INCLUDE) -DINPUT=$(INPUT) -DOUTPUT=$(OUTPUT) $< -o $@
+	$(CC) $(PFLAGS) -S -emit-llvm $(MIOSIX_FLAGS) $(CFLAGS) $(INCLUDE) -DINPUT=$(INPUT) -DOUTPUT=$(OUTPUT) $< -o $@
 
 obj/main.ll : $(LL_FILES)
 	$(LLVM_DIR)/bin/llvm-link -S $^ -o $@

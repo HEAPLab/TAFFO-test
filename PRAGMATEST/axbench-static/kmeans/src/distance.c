@@ -18,7 +18,7 @@ float euclideanDistance(RgbPixel*  p, Centroid*  c1) {
 
 	//function parameters pragmas
 	DO_PRAGMA(taffo p  euclideanDistance ANNOTATION_RGBPIXEL)
-	DO_PRAGMA(taffo c1 euclideanDistance ANNOTATION_RGBPIXEL)
+	DO_PRAGMA(taffo c1 euclideanDistance ANNOTATION_CENTROID)
 
 	#pragma taffo r euclideanDistance "scalar()"
 	#pragma taffo rr euclideanDistance "scalar(range(1.0e-2,2.976608) final)"

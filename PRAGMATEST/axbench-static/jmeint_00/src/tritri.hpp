@@ -5,13 +5,13 @@
  * 			Author: Amir Yazdanbakhsh <a.yazdanbakhsh@gatech.edu>
  */
 
-#define SUB(x) _Pragma (#x)
-#define DO_PRAGMA(x) SUB(x)
-
 #ifndef __TRITRI_HPP__
 #define __TRITRI_HPP__
 #include <cstdlib>
 #include <iostream>
+
+#define PRAG(x) _Pragma (#x)
+#define DO_PRAGMA(x) PRAG(x)
 
 //#define INSTRUMENT
 #ifdef INSTRUMENT

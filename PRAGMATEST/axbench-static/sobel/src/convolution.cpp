@@ -25,14 +25,13 @@ static float ky[][3] =
 			{ -1, 0, 1 }
 		} ;
 
-float convolve(float w[][3] ,
-               float k[][3] )
+float convolve(float w[][3] ,float k[][3] )
 {
 	//function parameters pragmas
 	#pragma taffo w convolve "scalar()"
 	#pragma taffo k convolve "scalar()"
 
-	#pragma taffo r convolve "scalar(range(-2,2) final)"
+	#pragma taffo r  convolve "scalar(range(-2,2) final)"
 	#pragma taffo rr convolve "scalar()"
 	float  r ;
 	float  rr ;
@@ -53,7 +52,7 @@ float sobel(float w[][3] )
 
 	#pragma taffo sx sobel "scalar()"
 	#pragma taffo sy sobel "scalar()"
-	#pragma taffo s sobel  "scalar()"
+	#pragma taffo s  sobel "scalar()"
 	#pragma taffo ss sobel "scalar(range(1e-1, 8) final)"
 	float  sx ;
 	float  sy ;

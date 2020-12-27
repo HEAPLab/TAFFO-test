@@ -7,15 +7,15 @@
 
 static int* indices;
 DO_PRAGMA(taffo x "target('x') " ANNOTATION_COMPLEX_RANGE)
-DO_PRAGMA(taffo f "target('f') " ANNOTATION_COMPLEX(,))
 static Complex*  x;
+DO_PRAGMA(taffo f "target('f') " ANNOTATION_COMPLEX(,))
 static Complex*  f;
 
 int main(int argc, char* argv[])
 {
 	int i ;
 
-	#pragma taffo n main "target('n') " ANNOTATION_RANGE_N
+	DO_PRAGMA(taffo n main "target('n') " ANNOTATION_RANGE_N)
 	int n = atoi(argv[1]);
 	std::string outputFilename 	= argv[2];
 

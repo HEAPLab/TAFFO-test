@@ -8,7 +8,9 @@ void fftSinCos(float  x,
 	//function parameters attributes
 	#pragma taffo x fftSinCos "scalar()"
 	#pragma taffo s fftSinCos "scalar()"
-	#pragma taffo c fftSinCos "scalar()"
+	#pragma taffo x fftSinCos "scalar()"
+
+	
     *s = sin(-2 * PI * x);
     *c = cos(-2 * PI * x);
 }

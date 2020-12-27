@@ -57,7 +57,7 @@ float euclideanDistance(RgbPixel*  p, Centroid*  c1) {
 
 int pickCluster(RgbPixel* p, Centroid*  c1) {
 	//function parameters pragmas
-	DO_PRAGMA(taffp p  pickCluster ANNOTATION_RGBPIXEL)
+	DO_PRAGMA(taffo p  pickCluster ANNOTATION_RGBPIXEL)
 	DO_PRAGMA(taffo c1 pickCluster ANNOTATION_CENTROID)
 
 	#pragma taffo d1 pickCluster "scalar()"
@@ -74,7 +74,7 @@ int pickCluster(RgbPixel* p, Centroid*  c1) {
 void assignCluster(RgbPixel*  p, Clusters*  clusters) {
 	//function parameters pragmas
 	DO_PRAGMA(taffo p        assignCluster ANNOTATION_RGBPIXEL)
-	DO_PRAGMA(taffp clusters assignCluster ANNOTATION_CLUSTER)
+	DO_PRAGMA(taffo clusters assignCluster ANNOTATION_CLUSTER)
 
 	int i = 0;
 

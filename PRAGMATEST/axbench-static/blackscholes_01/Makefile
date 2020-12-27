@@ -11,6 +11,7 @@ comma :=,
 OX          := -O3
 
 CFLAGS		:= -Wall -Wnarrowing -std=c++11 -MD
+PFLAGS      := -c -Xclang -load -Xclang /usr/local/lib/TaffoPlugin.so -Xclang -add-plugin -Xclang taffo-plugin 
 LFLAGS		+= #-lboost_regex 
 HEADERS		:= src
 INCLUDE		+= -I${HEADERS} -I../common/src
@@ -51,7 +52,7 @@ $(MODULE): DIR $(OBJ_FILES) $(OBJ_FILES_FIX)
 stats: $(MODULE) $(LL_FILES_ERR) $(IMIX_STAT) $(LLVM_STAT) $(MLFEAT_STAT)
 
 obj/%.ll: src/%.c
-	$(CLANGXX) -S -emit-llvm $(MIOSIX_FLAGS) $(CFLAGS) $(INCLUDE) -DINPUT=$(INPUT) -DOUTPUT=$(OUTPUT) $< -o $@
+	$(CLANGXX) $(PFLAGS) -S -emit-llvm $(MIOSIX_FLAGS) $(CFLAGS) $(INCLUDE) -DINPUT=$(INPUT) -DOUTPUT=$(OUTPUT) $< -o $@
 
 obj/%.init.ll: obj/%.ll
 	$(OPT) -load=$(INITLIB) -S -taffoinit -mem2reg $(if $(ISDEBUG), -debug-only=taffo-init$(comma)annotation) -stats $< -o $@ 2> stats/init.log
