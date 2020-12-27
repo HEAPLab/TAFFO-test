@@ -26,7 +26,8 @@ void init_array (int m, int n,
 		 DATA_TYPE *float_n,
 		 DATA_TYPE POLYBENCH_2D(data,M,N,m,n))
 {
-  int i, j;
+  int i __attribute__((annotate("scalar(range(0, " PB_XSTR(N) ")) final")));
+  int j __attribute__((annotate("scalar(range(0, " PB_XSTR(M) ")) final")));
 
   *float_n = 1.2;
 
@@ -63,8 +64,12 @@ void kernel_covariance(int m, int n,
 		       DATA_TYPE POLYBENCH_2D(symmat,M,M,m,m),
 		       DATA_TYPE POLYBENCH_1D(mean,M,m))
 {
-  int i, j, j1, j2;
-  
+  int i __attribute__((annotate("scalar(range(0, " PB_XSTR(N) ")) final")));
+  int j __attribute__((annotate("scalar(range(0, " PB_XSTR(M) ")) final")));
+
+  int j1 __attribute__((annotate("scalar(range(0, " PB_XSTR(M) ")) final")));
+  int j2 __attribute__((annotate("scalar(range(0, " PB_XSTR(M) ")) final")));
+
   #pragma scop
   /* Determine mean of column vectors of input data matrix */
   #pragma omp parallel
@@ -105,10 +110,10 @@ int main(int argc, char** argv)
   int m = M;
 
   /* Variable declaration/allocation. */
-  DATA_TYPE __attribute((annotate("target('float_n') scalar()) final"))) float_n;
-  POLYBENCH_2D_ARRAY_DECL(data,DATA_TYPE __attribute((annotate("target('data') scalar(range(- " PB_XSTR(N*N) " , " PB_XSTR(N*N)")) final"))),M,N,m,n);
-  POLYBENCH_2D_ARRAY_DECL(symmat,DATA_TYPE __attribute((annotate("target('cov') scalar(range(- " PB_XSTR(N*N*N) " , " PB_XSTR(N*N*N)")) final"))),M,M,m,m);
-  POLYBENCH_1D_ARRAY_DECL(mean,DATA_TYPE __attribute((annotate("target('mean') scalar(range(- " PB_XSTR(N*N*N*N) " , " PB_XSTR(N*N*N*N)")) final"))),M,m);
+  DATA_TYPE __attribute((annotate("target('float_n') scalar(range(0,8))"))) float_n;
+  POLYBENCH_2D_ARRAY_DECL(data,DATA_TYPE __attribute((annotate("target('data') scalar(range(0,1000))"))),M,N,m,n);
+  POLYBENCH_2D_ARRAY_DECL(symmat,DATA_TYPE __attribute((annotate("target('cov') scalar(range(0,1000000000))"))),M,M,m,m);
+  POLYBENCH_1D_ARRAY_DECL(mean,DATA_TYPE __attribute((annotate("target('mean') scalar(range(0,1000000))"))),M,m);
   
   /* Initialize array(s). */
   init_array (m, n, &float_n, POLYBENCH_ARRAY(data));
