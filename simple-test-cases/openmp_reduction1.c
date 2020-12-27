@@ -1,4 +1,4 @@
-///TAFFO_TEST_ARGS -Xvra -propagate-all -fopenmp
+///TAFFO_TEST_ARGS -fopenmp
 #include <stdio.h>
 
 #define N (100)
