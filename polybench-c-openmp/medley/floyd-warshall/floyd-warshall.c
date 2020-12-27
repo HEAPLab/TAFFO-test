@@ -25,8 +25,8 @@ static
 void init_array (int n,
 		 DATA_TYPE POLYBENCH_2D(path,N,N,n,n))
 {
-  int i __attribute__((annotate("scalar(range(-" PB_XSTR(N) ", " PB_XSTR(N) "))")));
-  int j __attribute__((annotate("scalar(range(-" PB_XSTR(N) ", " PB_XSTR(N) "))")));
+  int i __attribute__((annotate("scalar(range(0, " PB_XSTR(N) ")) final")));
+  int j __attribute__((annotate("scalar(range(0, " PB_XSTR(N) ")) final")));
 
   for (i = 0; i < n; i++)
     for (j = 0; j < n; j++)
@@ -66,8 +66,8 @@ void kernel_floyd_warshall(int n,
         for(i = 0; i < _PB_N; i++)
           for (j = 0; j < _PB_N; j++)
           {
-            DATA_TYPE __attribute__((annotate("scalar()"))) path_old = path[i][j];
-            DATA_TYPE __attribute__((annotate("scalar()"))) path_new = path[i][k] + path[k][j];
+            DATA_TYPE __attribute__((annotate("scalar(range(0, " PB_XSTR(N) "))"))) path_old = path[i][j];
+            DATA_TYPE __attribute__((annotate("scalar(range(0, " PB_XSTR(2*N) "))"))) path_new = path[i][k] + path[k][j];
             #pragma omp critical
             path[i][j] = (path[i][j] < path_new)
               ? path[i][j]
@@ -84,7 +84,7 @@ int main(int argc, char** argv)
   int n = N;
 
   /* Variable declaration/allocation. */
-  POLYBENCH_2D_ARRAY_DECL(path, DATA_TYPE __attribute__((annotate("target('path') scalar()"))), N, N, n, n);
+  POLYBENCH_2D_ARRAY_DECL(path, DATA_TYPE __attribute__((annotate("target('path') scalar(range(0, " PB_XSTR(N) "))"))), N, N, n, n);
 
 
   /* Initialize array(s). */
