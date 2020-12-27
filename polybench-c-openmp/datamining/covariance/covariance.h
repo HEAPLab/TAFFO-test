@@ -27,14 +27,10 @@
 #  endif
 
 #  ifdef MEDIUM_DATASET
-#   define M 240
-#   define N 240
+#   define M 1000
+#   define N 1000
 #  endif
 
-#  ifdef STANDARD_DATASET /* Default if unspecified. */
-#   define N 1000
-#   define M 1000
-#  endif
 
 #  ifdef LARGE_DATASET
 #   define N 1200
