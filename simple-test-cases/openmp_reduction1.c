@@ -1,11 +1,11 @@
-///TAFFO_TEST_ARGS -fopenmp
+///TAFFO_TEST_ARGS -fopenmp -Xvra -unroll=100
 #include <stdio.h>
 
 #define N (100)
 
 int main(int argc, char *argv[])
 {
-  float result __attribute__((annotate("scalar(range(0,100))"))) = 0.0;
+  float result __attribute__((annotate("target('result') scalar()"))) = 0.0;
 
   int i = 0;
 
