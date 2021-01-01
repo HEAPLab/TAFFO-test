@@ -29,7 +29,8 @@ void init_array(int ni, int nj,
 		DATA_TYPE POLYBENCH_2D(A,NJ,NJ,nj,nj),
 		DATA_TYPE POLYBENCH_2D(B,NI,NJ,ni,nj))
 {
-  int i, j;
+  int i __attribute__((annotate("scalar(range(0, " PB_XSTR(NI) ") final)")));
+  int j __attribute__((annotate("scalar(range(0, " PB_XSTR(NJ) ") final)")));
 
   *alpha = 32412;
   *beta = 2123;
@@ -72,7 +73,7 @@ void kernel_symm(int ni, int nj,
 		 DATA_TYPE POLYBENCH_2D(B,NI,NJ,ni,nj))
 {
   int i, j, k;
-  DATA_TYPE acc;
+  DATA_TYPE acc __attribute__((annotate("target('acc') scalar(range(0, 100000000) final)")));
   #pragma scop
   #pragma omp parallel
   {
@@ -101,11 +102,11 @@ int main(int argc, char** argv)
   int nj = NJ;
 
   /* Variable declaration/allocation. */
-  DATA_TYPE alpha;
-  DATA_TYPE beta;
-  POLYBENCH_2D_ARRAY_DECL(C,DATA_TYPE,NI,NJ,ni,nj);
-  POLYBENCH_2D_ARRAY_DECL(A,DATA_TYPE,NJ,NJ,nj,nj);
-  POLYBENCH_2D_ARRAY_DECL(B,DATA_TYPE,NI,NJ,ni,nj);
+  DATA_TYPE alpha __attribute__((annotate("target('alpha') scalar()")));
+  DATA_TYPE beta __attribute__((annotate("target('beta') scalar()")));
+  POLYBENCH_2D_ARRAY_DECL(C,DATA_TYPE __attribute__((annotate("target('C') scalar(range(0, 12000000000000000) final)"))),NI,NJ,ni,nj);
+  POLYBENCH_2D_ARRAY_DECL(A,DATA_TYPE __attribute__((annotate("target('A') scalar()"))),NJ,NJ,nj,nj);
+  POLYBENCH_2D_ARRAY_DECL(B,DATA_TYPE __attribute__((annotate("target('B') scalar()"))),NI,NJ,ni,nj);
 
   /* Initialize array(s). */
   init_array (ni, nj, &alpha, &beta,

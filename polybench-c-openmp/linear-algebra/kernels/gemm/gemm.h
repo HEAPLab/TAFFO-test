@@ -8,9 +8,9 @@
 #ifndef GEMM_H
 # define GEMM_H
 
-/* Default to STANDARD_DATASET. */
+/* Default to MEDIUM_DATASET. */
 # if !defined(MINI_DATASET) && !defined(SMALL_DATASET) && !defined(LARGE_DATASET) && !defined(EXTRALARGE_DATASET)
-#  define STANDARD_DATASET
+#  define MEDIUM_DATASET
 # endif
 
 /* Do not define anything if the user manually defines the size. */
@@ -28,7 +28,7 @@
 #   define NK 128
 #  endif
 
-#  ifdef STANDARD_DATASET /* Default if unspecified. */
+#  ifdef MEDIUM_DATASET /* Default if unspecified. */
 #   define NI 1024
 #   define NJ 1024
 #   define NK 1024
