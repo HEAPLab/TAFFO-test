@@ -29,7 +29,8 @@ void init_array(int ni, int nj, int nk,
 		DATA_TYPE POLYBENCH_2D(A,NI,NK,ni,nk),
 		DATA_TYPE POLYBENCH_2D(B,NK,NJ,nk,nj))
 {
-  int i, j;
+  int i __attribute__((annotate("scalar(range(0, " PB_XSTR(NI) ") final)")));
+  int j __attribute__((annotate("scalar(range(0, " PB_XSTR(NJ) ") final)")));
 
   *alpha = 32412;
   *beta = 2123;
@@ -98,11 +99,11 @@ int main(int argc, char** argv)
   int nk = NK;
 
   /* Variable declaration/allocation. */
-  DATA_TYPE alpha;
-  DATA_TYPE beta;
-  POLYBENCH_2D_ARRAY_DECL(C,DATA_TYPE,NI,NJ,ni,nj);
-  POLYBENCH_2D_ARRAY_DECL(A,DATA_TYPE,NI,NK,ni,nk);
-  POLYBENCH_2D_ARRAY_DECL(B,DATA_TYPE,NK,NJ,nk,nj);
+  DATA_TYPE alpha __attribute__((annotate("target('alpha') scalar()")));
+  DATA_TYPE beta __attribute__((annotate("target('beta') scalar()")));
+  POLYBENCH_2D_ARRAY_DECL(C,DATA_TYPE __attribute__((annotate("target('C') scalar(range(0, 20000000000000) final)"))),NI,NJ,ni,nj);
+  POLYBENCH_2D_ARRAY_DECL(A,DATA_TYPE __attribute__((annotate("target('A') scalar()"))),NI,NK,ni,nk);
+  POLYBENCH_2D_ARRAY_DECL(B,DATA_TYPE __attribute__((annotate("target('B') scalar()"))),NK,NJ,nk,nj);
 
   /* Initialize array(s). */
   init_array (ni, nj, nk, &alpha, &beta,

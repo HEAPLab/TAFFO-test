@@ -26,7 +26,9 @@ void init_array(int nr, int nq, int np,
 		DATA_TYPE POLYBENCH_3D(A,NR,NQ,NP,nr,nq,np),
 		DATA_TYPE POLYBENCH_2D(C4,NP,NP,np,np))
 {
-  int i, j, k;
+  int i __attribute__((annotate("scalar(range(0, " PB_XSTR(NR) ") final)")));
+  int j __attribute__((annotate("scalar(range(0, " PB_XSTR(NQ) ") final)")));
+  int k __attribute__((annotate("scalar(range(0, " PB_XSTR(NP) ") final)")));
 
   for (i = 0; i < nr; i++)
     for (j = 0; j < nq; j++)
@@ -93,9 +95,9 @@ int main(int argc, char** argv)
   int np = NP;
 
   /* Variable declaration/allocation. */
-  POLYBENCH_3D_ARRAY_DECL(A,DATA_TYPE,NR,NQ,NP,nr,nq,np);
-  POLYBENCH_3D_ARRAY_DECL(sum,DATA_TYPE,NR,NQ,NP,nr,nq,np);
-  POLYBENCH_2D_ARRAY_DECL(C4,DATA_TYPE,NP,NP,np,np);
+  POLYBENCH_3D_ARRAY_DECL(A,DATA_TYPE __attribute__((annotate("target('A') scalar(range(0, 1000000) final)"))),NR,NQ,NP,nr,nq,np);
+  POLYBENCH_3D_ARRAY_DECL(sum,DATA_TYPE __attribute__((annotate("target('sum') scalar(range(0, 1000000) final)"))),NR,NQ,NP,nr,nq,np);
+  POLYBENCH_2D_ARRAY_DECL(C4,DATA_TYPE __attribute__((annotate("target('C4') scalar()"))),NP,NP,np,np);
 
   /* Initialize array(s). */
   init_array (nr, nq, np,
