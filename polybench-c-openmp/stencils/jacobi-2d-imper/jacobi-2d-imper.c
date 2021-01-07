@@ -26,7 +26,8 @@ void init_array (int n,
 		 DATA_TYPE POLYBENCH_2D(A,N,N,n,n),
 		 DATA_TYPE POLYBENCH_2D(B,N,N,n,n))
 {
-  int i, j;
+  int i __attribute__((annotate("scalar(range(0, " PB_XSTR(N) ") final)")));
+  int j __attribute__((annotate("scalar(range(0, " PB_XSTR(N) ") final)")));
 
   for (i = 0; i < n; i++)
     for (j = 0; j < n; j++)
@@ -73,11 +74,11 @@ void kernel_jacobi_2d_imper(int tsteps,
     {
       for (t = 0; t < _PB_TSTEPS; t++)
       {
-        #pragma omp for schedule(static) 
+        #pragma omp parallel for schedule(static)
         for (i = 1; i < _PB_N - 1; i++)
           for (j = 1; j < _PB_N - 1; j++)
             B[i][j] = 0.2 * (A[i][j] + A[i][j-1] + A[i][1+j] + A[1+i][j] + A[i-1][j]);
-	      #pragma omp for schedule(static) 
+	      #pragma omp parallel for schedule(static)
         for (i = 1; i < _PB_N-1; i++)
           for (j = 1; j < _PB_N-1; j++)
             A[i][j] = B[i][j];
@@ -95,8 +96,8 @@ int main(int argc, char** argv)
   int tsteps = TSTEPS;
 
   /* Variable declaration/allocation. */
-  POLYBENCH_2D_ARRAY_DECL(A, DATA_TYPE, N, N, n, n);
-  POLYBENCH_2D_ARRAY_DECL(B, DATA_TYPE, N, N, n, n);
+  POLYBENCH_2D_ARRAY_DECL(A, DATA_TYPE __attribute__((annotate("target('A') scalar(range(0,1000) final)"))), N, N, n, n);
+  POLYBENCH_2D_ARRAY_DECL(B, DATA_TYPE __attribute__((annotate("target('A') scalar(range(0,1000) final)"))), N, N, n, n);
 
 
   /* Initialize array(s). */

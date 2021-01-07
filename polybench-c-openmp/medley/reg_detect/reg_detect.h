@@ -8,9 +8,9 @@
 #ifndef REG_DETECT_H
 # define REG_DETECT_H
 
-/* Default to STANDARD_DATASET. */
+/* Default to MEDIUM_DATASET. */
 # if !defined(MINI_DATASET) && !defined(SMALL_DATASET) && !defined(LARGE_DATASET) && !defined(EXTRALARGE_DATASET)
-#  define STANDARD_DATASET
+#  define MEDIUM_DATASET
 # endif
 
 /* Do not define anything if the user manually defines the size. */
@@ -28,7 +28,7 @@
 #   define MAXGRID 6
 #  endif
 
-#  ifdef STANDARD_DATASET /* Default if unspecified. */
+#  ifdef MEDIUM_DATASET /* Default if unspecified. */
 #   define NITER 10000
 #   define LENGTH 64
 #   define MAXGRID 6
@@ -52,8 +52,8 @@
 # define _PB_MAXGRID POLYBENCH_LOOP_BOUND(MAXGRID,maxgrid)
 
 # ifndef DATA_TYPE
-#  define DATA_TYPE int
-#  define DATA_PRINTF_MODIFIER "%d "
+#  define DATA_TYPE double
+#  define DATA_PRINTF_MODIFIER "%0.16lf "
 # endif
 
 

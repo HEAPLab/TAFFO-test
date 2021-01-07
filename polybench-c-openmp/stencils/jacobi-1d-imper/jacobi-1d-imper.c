@@ -26,7 +26,7 @@ void init_array (int n,
 		 DATA_TYPE POLYBENCH_1D(A,N,n),
 		 DATA_TYPE POLYBENCH_1D(B,N,n))
 {
-  int i;
+  int i __attribute__((annotate("scalar(range(0, " PB_XSTR(N) ") final)")));
 
   for (i = 0; i < n; i++)
       {
@@ -71,15 +71,13 @@ void kernel_jacobi_1d_imper(int tsteps,
     {
       for (t = 0; t < _PB_TSTEPS; t++)
       {
-        #pragma omp for schedule(static)
+        #pragma omp parallel for schedule(static)
         for (i = 1; i < _PB_N - 1; i++)
           B[i] = 0.33333 * (A[i-1] + A[i] + A[i + 1]);
-        #pragma omp barrier
-        
-        #pragma omp for schedule(static)
+
+        #pragma omp parallel for schedule(static)
         for (j = 1; j < _PB_N - 1; j++)
           A[j] = B[j];
-        #pragma omp barrier
       }
     }
   }
@@ -94,8 +92,8 @@ int main(int argc, char** argv)
   int tsteps = TSTEPS;
 
   /* Variable declaration/allocation. */
-  POLYBENCH_1D_ARRAY_DECL(A, DATA_TYPE, N, n);
-  POLYBENCH_1D_ARRAY_DECL(B, DATA_TYPE, N, n);
+  POLYBENCH_1D_ARRAY_DECL(A, DATA_TYPE __attribute__((annotate("target('A') scalar()"))), N, n);
+  POLYBENCH_1D_ARRAY_DECL(B, DATA_TYPE __attribute__((annotate("target('B') scalar()"))), N, n);
 
 
   /* Initialize array(s). */

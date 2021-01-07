@@ -25,7 +25,8 @@ static
 void init_array (int n,
 		 DATA_TYPE POLYBENCH_2D(A,N,N,n,n))
 {
-  int i, j;
+  int i __attribute__((annotate("scalar(range(0, " PB_XSTR(N) ") final)")));
+  int j __attribute__((annotate("scalar(range(0, " PB_XSTR(N) ") final)")));
 
   for (i = 0; i < n; i++)
     for (j = 0; j < n; j++)
@@ -66,7 +67,7 @@ void kernel_seidel_2d(int tsteps,
     #pragma omp master
     {
       for (t = 0; t <= _PB_TSTEPS - 1; t++) {
-        #pragma omp for schedule(static) collapse (2)
+        #pragma omp parallel for schedule(static) collapse (2)
         for (i = 1; i<= _PB_N - 2; i++) {
           for (j = 1; j <= _PB_N - 2; j++) {
             A[i][j] = (A[i-1][j-1] + A[i-1][j] + A[i-1][j+1]
@@ -88,7 +89,7 @@ int main(int argc, char** argv)
   int tsteps = TSTEPS;
 
   /* Variable declaration/allocation. */
-  POLYBENCH_2D_ARRAY_DECL(A, DATA_TYPE, N, N, n, n);
+  POLYBENCH_2D_ARRAY_DECL(A, DATA_TYPE __attribute__((annotate("target('A') scalar()"))), N, N, n, n);
 
 
   /* Initialize array(s). */
