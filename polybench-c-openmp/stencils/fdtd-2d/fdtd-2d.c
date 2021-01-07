@@ -30,7 +30,8 @@ void init_array (int tmax,
 		 DATA_TYPE POLYBENCH_2D(hz,NX,NY,nx,ny),
 		 DATA_TYPE POLYBENCH_1D(_fict_,TMAX,tmax))
 {
-  int i, j;
+  int i __attribute__((annotate("scalar(range(0, " PB_XSTR(NX) ") final)")));
+  int j __attribute__((annotate("scalar(range(0, " PB_XSTR(NY) ") final)")));
 
   for (i = 0; i < tmax; i++)
     _fict_[i] = (DATA_TYPE) i;
@@ -85,25 +86,21 @@ void kernel_fdtd_2d(int tmax,
     {
       for (t = 0; t < _PB_TMAX; t++)
       {
-        #pragma omp for
+        #pragma omp parallel for
         for (j = 0; j < _PB_NY; j++)
           ey[0][j] = _fict_[t];
-        #pragma omp barrier
-        #pragma omp for collapse(2) schedule(static)
+        #pragma omp parallel for collapse(2) schedule(static)
         for (i = 1; i < _PB_NX; i++)
           for (j = 0; j < _PB_NY; j++)
             ey[i][j] = ey[i][j] - 0.5*(hz[i][j]-hz[i-1][j]);
-        #pragma omp barrier
-        #pragma omp for collapse(2) schedule(static)
+        #pragma omp parallel for collapse(2) schedule(static)
         for (i = 0; i < _PB_NX; i++)
           for (j = 1; j < _PB_NY; j++)
             ex[i][j] = ex[i][j] - 0.5*(hz[i][j]-hz[i][j-1]);
-        #pragma omp barrier
-        #pragma omp for collapse(2) schedule(static)
+        #pragma omp parallel for collapse(2) schedule(static)
         for (i = 0; i < _PB_NX - 1; i++)
           for (j = 0; j < _PB_NY - 1; j++)
             hz[i][j] = hz[i][j] - 0.7*  (ex[i][j+1] - ex[i][j] + ey[i+1][j] - ey[i][j]);
-        #pragma omp barrier
       }
     }
   }
@@ -119,10 +116,10 @@ int main(int argc, char** argv)
   int ny = NY;
 
   /* Variable declaration/allocation. */
-  POLYBENCH_2D_ARRAY_DECL(ex,DATA_TYPE,NX,NY,nx,ny);
-  POLYBENCH_2D_ARRAY_DECL(ey,DATA_TYPE,NX,NY,nx,ny);
-  POLYBENCH_2D_ARRAY_DECL(hz,DATA_TYPE,NX,NY,nx,ny);
-  POLYBENCH_1D_ARRAY_DECL(_fict_,DATA_TYPE,TMAX,tmax);
+  POLYBENCH_2D_ARRAY_DECL(ex,DATA_TYPE __attribute__((annotate("target('ex') scalar(range(-1000,1000) final)"))),NX,NY,nx,ny);
+  POLYBENCH_2D_ARRAY_DECL(ey,DATA_TYPE __attribute__((annotate("target('ey') scalar(range(-1000,1000) final)"))),NX,NY,nx,ny);
+  POLYBENCH_2D_ARRAY_DECL(hz,DATA_TYPE __attribute__((annotate("target('hz') scalar(range(-1000,1000) final)"))),NX,NY,nx,ny);
+  POLYBENCH_1D_ARRAY_DECL(_fict_,DATA_TYPE __attribute__((annotate("target('_fict_') scalar()"))),TMAX,tmax);
 
   /* Initialize array(s). */
   init_array (tmax, nx, ny,
