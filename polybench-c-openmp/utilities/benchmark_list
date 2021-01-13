@@ -1,32 +1,14 @@
-./datamining/correlation/correlation.c (NOT WORKING, SEGFAULT WITH FLOAT)
 ./datamining/covariance/covariance.c
 ./linear-algebra/kernels/2mm/2mm.c
 ./linear-algebra/kernels/3mm/3mm.c
-./linear-algebra/kernels/atax/atax.c (NOT WORKING, SEGFAULT WITH FLOAT)
-./linear-algebra/kernels/bicg/bicg.c (NOT WORKING, SEGFAULT WITH FLOAT)
-./linear-algebra/kernels/cholesky/cholesky.c (NOT WORKING, NAN WITH FLOAT)
 ./linear-algebra/kernels/doitgen/doitgen.c
 ./linear-algebra/kernels/gemm/gemm.c
-./linear-algebra/kernels/gemver/gemver.c (NOT WORKING, SEGFAULT WITH FLOAT)
-./linear-algebra/kernels/gesummv/gesummv.c (NOT WORKING, SEGFAULT WITH FLOAT)
-./linear-algebra/kernels/mvt/mvt.c (NOT WORKING, SEGFAULT WITH FLOAT)
 ./linear-algebra/kernels/symm/symm.c
 ./linear-algebra/kernels/syr2k/syr2k.c
 ./linear-algebra/kernels/syrk/syrk.c
-./linear-algebra/kernels/trisolv/trisolv.c (NOT WORKING, SEGFAULT WITH FLOAT)
-./linear-algebra/kernels/trmm/trmm.c (NOT WORKING, SEGFAULT WITH FLOAT)
-./linear-algebra/solvers/durbin/durbin.c (NOT WORKING, SEGFAULT WITH FLOAT)
-./linear-algebra/solvers/dynprog/dynprog.c (NOT WORKING, GIVES 0 AS A RESULT)
-./linear-algebra/solvers/gramschmidt/gramschmidt.c (NOT WORKING, NAN EVERYWHERE WITH FLOAT)
-./linear-algebra/solvers/lu/lu.c (NOT WORKING, NAN EVERYWHERE WITH FLOAT)
-./linear-algebra/solvers/ludcmp/ludcmp.c (NOT WORKING, NAN EVERYWHERE WITH FLOAT)
 ./medley/floyd-warshall/floyd-warshall.c
 ./medley/reg_detect/reg_detect.c
-./stencils/adi/adi.c (NUMBERS ARE EXTREMELY HIGH, MEANWHILE THE IMPLEMENTATION SHOULD GIVE
-./stencils/convolution-2d/convolution-2d.c (NOT WORKING, SEGFAULT WITH FLOAT)
-./stencils/convolution-3d/convolution-3d.c (NOT WORKING, SEGFAULT WITH FLOAT)
 ./stencils/fdtd-2d/fdtd-2d.c
-./stencils/fdtd-apml/fdtd-apml.c (NOT WORKING, SEGFAULT WITH FLOAT)
 ./stencils/jacobi-1d-imper/jacobi-1d-imper.c
 ./stencils/jacobi-2d-imper/jacobi-2d-imper.c
 ./stencils/seidel-2d/seidel-2d.c
