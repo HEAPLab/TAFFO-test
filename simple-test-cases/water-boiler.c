@@ -1,12 +1,16 @@
 ///TAFFO_TEST_ARGS -Xvra -propagate-all -Xvra -unroll=10
-/* Scrivere un programma che acquisisce una seq di num reali corrisp a diversi valori di 
- * pressione in una caldaia. Questi val sono misurati a intervalli regolari in sequenza.
- * La seq è terminata dall'inserimento di un valore negativo. Il programma calcola la
- * media dei diversi valori di pressione e la media dei picchi di pressione. Un valore p1
- * è un picco (max locale) se è seguito da un valore p2 che è minore di p1 e se è precedu-
- * to da un valore p0 minore di p1. Primo e ultimo val della seq non sono considerati pic-
- * chi. Se non vengono inseriti valori il prog stampa trattino sia per la press media che
- * per la media dei picchi. Se no picchi stampa trattino come media picchi. */
+/* This program reads a sequence of pressure values in the circuit of a
+ * water boiler, measured at regular intervals. The sequence is terminated by 
+ * the first negative number.
+ *   The output of the program is the average of the various pressure values and
+ * the average of the pressure peaks.
+ *   A pressure value p1 is a peak (or local maxima) if it is followed by another
+ * value p2 which is lesser than p1, and if it is preceded by another value p0
+ * which is also lesser than p1.
+ *   First and last value of the value sequence are not considered peaks. If no
+ * values are inserted, the program prints a dash character ('-') in lieu of
+ * the two averages. If no peaks are detected, it prints a dash only for the
+ * peaks average. */
 
 #include <stdio.h>
 
@@ -36,12 +40,12 @@ int main(int argc, char *argv[]) {
     scanf("%f",&p3);
   }
   
-  printf("Media picchi: ");
+  printf("Peak average: ");
   if (cPeak > 0)
     printf("%f\n", sPeak / cPeak);
   else
     printf("-\n");
-  printf("Media totale: ");
+  printf("Global average: ");
   if (cAll > 0)
     printf("%f\n", sAll / cAll);
   else
