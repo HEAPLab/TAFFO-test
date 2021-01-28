@@ -9,6 +9,9 @@
 #ifndef RGB_IMAGE_H_
 #define RGB_IMAGE_H_
 
+#define SUB(x) _Pragma (#x)
+#define DO_PRAGMA(x) SUB(x) 
+
 typedef struct {
    float r;
    float g;

@@ -57,7 +57,6 @@ int loadRgbImage(const char* fileName, RgbImage* image, float scale) {
 	int i;
 	int j;
 	char w[256];
-	//RgbPixel** __attribute((annotate(ANNOTATION_RGBPIXEL))) pixels;
 	DO_PRAGMA(taffo pixels loadRgbImage ANNOTATION_RGBPIXEL)
 	RgbPixel**& pixels = image->pixels;
 	FILE *fp;
