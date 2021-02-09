@@ -76,9 +76,9 @@ recompile_one() {
 }
 
 if [[ "$1" == "clean" ]]; then
-  rm "$SCRIPTPATH"/*.taffotmp.*
-  rm "$SCRIPTPATH"/*.out
-  rm "$SCRIPTPATH"/*.log
+  rm -f "$SCRIPTPATH"/build/*.taffotmp.*
+  rm -f "$SCRIPTPATH"/*.out
+  rm -f "$SCRIPTPATH"/*.log
   exit 0
 fi
 
