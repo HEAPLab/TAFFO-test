@@ -96,7 +96,7 @@ fptype CNDF ( fptype __attribute((annotate("scalar()"))) InputX )
     xNPrimeofX = expValues;
     xNPrimeofX = xNPrimeofX * inv_sqrt_2xPI;
 
-    xK2 = 0.2316419 * xInput;
+    xK2 = 0.2316419 * InputXX;
     xK2 = 1.0 + xK2;
     xK2 = 1.0 / xK2;
     xK2_2 = xK2 * xK2;
