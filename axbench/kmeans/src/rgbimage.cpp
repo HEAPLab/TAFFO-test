@@ -54,8 +54,7 @@ int loadRgbImage(const char* fileName,
 	int i;
 	int j;
 	char w[256];
-	//RgbPixel** __attribute((annotate(ANNOTATION_RGBPIXEL))) pixels;
-	RgbPixel**& __attribute((annotate(ANNOTATION_RGBPIXEL))) pixels = image->pixels;
+	RgbPixel** __attribute((annotate(ANNOTATION_RGBPIXEL))) pixels;
 	FILE *fp;
 
 	//printf("Loading %s ...\n", fileName);
@@ -122,7 +121,7 @@ int loadRgbImage(const char* fileName,
 			pixels[i][j].distance = 0.;
 		}
 	}
-	//image->pixels = pixels;
+	image->pixels = pixels;
 
 	c = readCell(fp, w);
 	image->meta = (char*)malloc(strlen(w) * sizeof(char));
