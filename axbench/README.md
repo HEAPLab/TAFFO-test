@@ -7,7 +7,7 @@ TAFFO must have been compiled and installed, and its binaries must be in the cur
 First, do
 ```bash
 $ export LLVM_DIR=/path/to/LLVM/install
-$ source ../setenv.sh /path/to/TAFFO/install
+$ source ./setenv.sh /path/to/TAFFO/install
 ```
 
 Then, you may enter each one of the app directories, and compile it with
