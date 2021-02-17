@@ -36,11 +36,12 @@ recompile_one() {
     fi
   fi
   out=${1%.*}.out
+  mkdir -p build
   printf '[BUILD] [....] %s' "$input"
   if [[ $FLOAT -eq 1 ]]; then
     args="$args -float-output ${1%.*}.float.out"
   fi
-  $TIMEOUT taffo "$args" -o "$out" "$input" $extraargs -debug -temp-dir . 2> "$input".log
+  $TIMEOUT taffo "$args" -o "$out" "$input" $extraargs -debug -temp-dir ./build 2> "$input".log
   bpid_fc=$?
   if [[ $bpid_fc -ne 0 ]]; then
     code='FAIL'
@@ -75,9 +76,9 @@ recompile_one() {
 }
 
 if [[ "$1" == "clean" ]]; then
-  rm "$SCRIPTPATH"/*.taffotmp.*
-  rm "$SCRIPTPATH"/*.out
-  rm "$SCRIPTPATH"/*.log
+  rm -f "$SCRIPTPATH"/build/*.taffotmp.*
+  rm -f "$SCRIPTPATH"/*.out
+  rm -f "$SCRIPTPATH"/*.log
   exit 0
 fi
 
