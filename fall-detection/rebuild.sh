@@ -1,8 +1,7 @@
-#!/bin/zsh
+#!/bin/bash
 set -e
 
-
-~/dev/TAFFO/test/magiclang2.sh -debug  porting.c -lm -O0 -o taffo.out
+taffo -debug-taffo porting.c -lm -O0 -o taffo.out
 gcc -O0 porting.c -lm
 
 echo "Running original program..."
