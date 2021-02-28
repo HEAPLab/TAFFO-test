@@ -7,7 +7,7 @@ int main(int argc, char *argv[])
 {
   float result __attribute__((annotate("target('result') scalar()"))) = 0.0;
   float container[N] __attribute__((annotate("target('container') scalar()")));
-  float container_result __attribute__((annotate("target('container_result') scalar()"))) = 0;
+  float container_result __attribute__((annotate("target('container_result') scalar()"))) = 0.0;
 
   int i = 0;
 
