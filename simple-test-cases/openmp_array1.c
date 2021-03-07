@@ -6,7 +6,7 @@
 
 int main(int argc, char *argv[])
   {
-    float array[MAX_N] __attribute__((annotate("scalar(range(0,100))")));
+    float array[MAX_N] __attribute__((annotate("target('array') scalar(range(0,100) final)")));
 
     int i = 0;
 
@@ -15,7 +15,7 @@ int main(int argc, char *argv[])
       array[i] = i * 1.0;
     }
 
-    float result __attribute__((annotate("scalar(range(0,1000))"))) = 0;
+    float result __attribute__((annotate("target('result') scalar(range(0,6000) final)"))) = 0;
 
     for (i = 0; i < MAX_N; i++) {
       result += array[i];
