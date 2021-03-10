@@ -42,8 +42,8 @@ to process one single benchmark instead of all of them.
 ## Modifications
 Note that most benchmarks in [the original repository](https://github.com/cavazos-lab/PolyBench-ACC) have been modified, not only by adding annotations, but by fixing syntactical errors in the usage of OpenMP.
 
-A not-negligible part of the benchmarks has not only syntactical, but also logical errors, when compiling with plain clang. Therefore, they have been excluded and deleted.
-The deleted benchmarks, with the related motivation, are the following:
+A not-negligible part of the benchmarks has not only syntactical, but also logical errors, when compiling with plain clang. Therefore, they have been excluded from compilation and testing.
+The disabled benchmarks, with the related motivation, are the following:
 - datamining/correlation - Segmentation Fault
 - linear-algebra/kernels/atax - Segmentation Fault
 - linear-algebra/kernels/bicg - Segmentation Fault
@@ -64,3 +64,5 @@ The deleted benchmarks, with the related motivation, are the following:
 - stencils/fdtd-apml - Segmentation Fault
 
 You can find a list of the working ones in the [benchmark_list file](./utilities/benchmark_list).
+
+A complete diff between the original OpenMP PolyBench and the current TAFFO annotated version can be found in [MODIFICATIONS.patch](./MODIFICATIONS.patch).
