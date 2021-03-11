@@ -152,18 +152,10 @@ diff -ruN --exclude=utilities --exclude='*.py' --exclude='*.sh' --exclude='*.md'
  #  endif
  
 -#  ifdef STANDARD_DATASET /* Default if unspecified. */
--#   define NI 1024
--#   define NJ 1024
--#   define NK 1024
--#   define NL 1024
 +#  ifdef STANDARD_DATASET
-+#   define NI 800
-+#   define NJ 900
-+#   define NK 1100
-+#   define NL 1200
- #  endif
- 
- #  ifdef LARGE_DATASET
+ #   define NI 1024
+ #   define NJ 1024
+ #   define NK 1024
 diff -ruN --exclude=utilities --exclude='*.py' --exclude='*.sh' --exclude='*.md' ../polybench-c-openmp-original/linear-algebra/kernels/2mm/2mm.opts ./linear-algebra/kernels/2mm/2mm.opts
 --- ../polybench-c-openmp-original/linear-algebra/kernels/2mm/2mm.opts	1970-01-01 01:00:00.000000000 +0100
 +++ ./linear-algebra/kernels/2mm/2mm.opts	2021-03-11 10:19:56.000000000 +0100
