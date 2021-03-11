@@ -9,8 +9,8 @@
 # define COVARIANCE_H
 
 /* Default to STANDARD_DATASET. */
-# if !defined(MINI_DATASET) && !defined(MEDIUM_DATASET) && !defined(LARGE_DATASET) && !defined(EXTRALARGE_DATASET)
-#  define LARGE_DATASET
+# if !defined(MINI_DATASET) && !defined(STANDARD_DATASET) && !defined(LARGE_DATASET) && !defined(EXTRALARGE_DATASET)
+#  define STANDARD_DATASET
 # endif
 
 /* Do not define anything if the user manually defines the size. */
@@ -26,15 +26,15 @@
 #   define M 500
 #  endif
 
-#  ifdef MEDIUM_DATASET
+#  ifdef STANDARD_DATASET
 #   define M 1000
 #   define N 1000
 #  endif
 
 
 #  ifdef LARGE_DATASET
-#   define N 1200
-#   define M 1400
+#   define N 2000
+#   define M 2000
 #  endif
 
 #  ifdef EXTRALARGE_DATASET

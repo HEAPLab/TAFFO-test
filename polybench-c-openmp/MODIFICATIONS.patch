@@ -1,6 +1,6 @@
-diff --color -ruN '--exclude=utilities' '--exclude=*.py' '--exclude=*.sh' '--exclude=*.md' ../polybench-c-openmp-original/datamining/covariance/covariance.c ./datamining/covariance/covariance.c
---- ../polybench-c-openmp-original/datamining/covariance/covariance.c	2021-03-10 00:14:07.570892852 +0100
-+++ ./datamining/covariance/covariance.c	2021-01-01 22:05:55.050207481 +0100
+diff -ruN --exclude=utilities --exclude='*.py' --exclude='*.sh' --exclude='*.md' ../polybench-c-openmp-original/datamining/covariance/covariance.c ./datamining/covariance/covariance.c
+--- ../polybench-c-openmp-original/datamining/covariance/covariance.c	2021-03-11 08:55:18.000000000 +0100
++++ ./datamining/covariance/covariance.c	2021-03-11 10:19:56.000000000 +0100
 @@ -26,7 +26,8 @@
  		 DATA_TYPE *float_n,
  		 DATA_TYPE POLYBENCH_2D(data,M,N,m,n))
@@ -62,20 +62,19 @@ diff --color -ruN '--exclude=utilities' '--exclude=*.py' '--exclude=*.sh' '--exc
    
    /* Initialize array(s). */
    init_array (m, n, &float_n, POLYBENCH_ARRAY(data));
-diff --color -ruN '--exclude=utilities' '--exclude=*.py' '--exclude=*.sh' '--exclude=*.md' ../polybench-c-openmp-original/datamining/covariance/covariance.h ./datamining/covariance/covariance.h
---- ../polybench-c-openmp-original/datamining/covariance/covariance.h	2021-03-10 00:14:07.570892852 +0100
-+++ ./datamining/covariance/covariance.h	2021-01-01 22:05:55.053540799 +0100
-@@ -9,16 +9,16 @@
+diff -ruN --exclude=utilities --exclude='*.py' --exclude='*.sh' --exclude='*.md' ../polybench-c-openmp-original/datamining/covariance/covariance.h ./datamining/covariance/covariance.h
+--- ../polybench-c-openmp-original/datamining/covariance/covariance.h	2021-03-11 08:55:18.000000000 +0100
++++ ./datamining/covariance/covariance.h	2021-03-11 10:19:56.000000000 +0100
+@@ -9,7 +9,7 @@
  # define COVARIANCE_H
  
  /* Default to STANDARD_DATASET. */
 -# if !defined(MINI_DATASET) && !defined(SMALL_DATASET) && !defined(LARGE_DATASET) && !defined(EXTRALARGE_DATASET)
--#  define STANDARD_DATASET
-+# if !defined(MINI_DATASET) && !defined(MEDIUM_DATASET) && !defined(LARGE_DATASET) && !defined(EXTRALARGE_DATASET)
-+#  define LARGE_DATASET
++# if !defined(MINI_DATASET) && !defined(STANDARD_DATASET) && !defined(LARGE_DATASET) && !defined(EXTRALARGE_DATASET)
+ #  define STANDARD_DATASET
  # endif
  
- /* Do not define anything if the user manually defines the size. */
+@@ -17,8 +17,8 @@
  # if !defined(N) && !defined(M)
  /* Define the possible dataset sizes. */
  #  ifdef MINI_DATASET
@@ -86,26 +85,21 @@ diff --color -ruN '--exclude=utilities' '--exclude=*.py' '--exclude=*.sh' '--exc
  #  endif
  
  #  ifdef SMALL_DATASET
-@@ -26,14 +26,15 @@
+@@ -26,11 +26,12 @@
  #   define M 500
  #  endif
  
 -#  ifdef STANDARD_DATASET /* Default if unspecified. */
 -#   define N 1000
-+#  ifdef MEDIUM_DATASET
++#  ifdef STANDARD_DATASET
  #   define M 1000
 +#   define N 1000
  #  endif
  
 +
  #  ifdef LARGE_DATASET
--#   define N 2000
--#   define M 2000
-+#   define N 1200
-+#   define M 1400
- #  endif
- 
- #  ifdef EXTRALARGE_DATASET
+ #   define N 2000
+ #   define M 2000
 @@ -47,7 +48,7 @@
  
  # ifndef DATA_TYPE
@@ -115,9 +109,9 @@ diff --color -ruN '--exclude=utilities' '--exclude=*.py' '--exclude=*.sh' '--exc
  # endif
  
  
-diff --color -ruN '--exclude=utilities' '--exclude=*.py' '--exclude=*.sh' '--exclude=*.md' ../polybench-c-openmp-original/linear-algebra/kernels/2mm/2mm.c ./linear-algebra/kernels/2mm/2mm.c
---- ../polybench-c-openmp-original/linear-algebra/kernels/2mm/2mm.c	2021-03-10 00:14:07.570892852 +0100
-+++ ./linear-algebra/kernels/2mm/2mm.c	2021-01-01 22:07:14.523222345 +0100
+diff -ruN --exclude=utilities --exclude='*.py' --exclude='*.sh' --exclude='*.md' ../polybench-c-openmp-original/linear-algebra/kernels/2mm/2mm.c ./linear-algebra/kernels/2mm/2mm.c
+--- ../polybench-c-openmp-original/linear-algebra/kernels/2mm/2mm.c	2021-03-11 08:55:18.000000000 +0100
++++ ./linear-algebra/kernels/2mm/2mm.c	2021-03-11 10:19:56.000000000 +0100
 @@ -30,7 +30,8 @@
  		DATA_TYPE POLYBENCH_2D(C,NL,NJ,nl,nj),
  		DATA_TYPE POLYBENCH_2D(D,NI,NL,ni,nl))
@@ -150,38 +144,34 @@ diff --color -ruN '--exclude=utilities' '--exclude=*.py' '--exclude=*.sh' '--exc
  
    /* Initialize array(s). */
    init_array (ni, nj, nk, nl, &alpha, &beta,
-diff --color -ruN '--exclude=utilities' '--exclude=*.py' '--exclude=*.sh' '--exclude=*.md' ../polybench-c-openmp-original/linear-algebra/kernels/2mm/2mm.h ./linear-algebra/kernels/2mm/2mm.h
---- ../polybench-c-openmp-original/linear-algebra/kernels/2mm/2mm.h	2021-03-10 00:14:07.570892852 +0100
-+++ ./linear-algebra/kernels/2mm/2mm.h	2021-01-01 22:07:14.523222345 +0100
-@@ -8,9 +8,9 @@
- #ifndef _2MM_H
- # define _2MM_H
- 
--/* Default to STANDARD_DATASET. */
-+/* Default to MEDIUM_DATASET. */
- # if !defined(MINI_DATASET) && !defined(SMALL_DATASET) && !defined(LARGE_DATASET) && !defined(EXTRALARGE_DATASET)
--#  define STANDARD_DATASET
-+#  define MEDIUM_DATASET
- # endif
- 
- /* Do not define anything if the user manually defines the size. */
-@@ -30,7 +30,7 @@
+diff -ruN --exclude=utilities --exclude='*.py' --exclude='*.sh' --exclude='*.md' ../polybench-c-openmp-original/linear-algebra/kernels/2mm/2mm.h ./linear-algebra/kernels/2mm/2mm.h
+--- ../polybench-c-openmp-original/linear-algebra/kernels/2mm/2mm.h	2021-03-11 08:55:18.000000000 +0100
++++ ./linear-algebra/kernels/2mm/2mm.h	2021-03-11 10:19:56.000000000 +0100
+@@ -30,11 +30,11 @@
  #   define NL 128
  #  endif
  
 -#  ifdef STANDARD_DATASET /* Default if unspecified. */
-+#  ifdef MEDIUM_DATASET /* Default if unspecified. */
- #   define NI 1024
- #   define NJ 1024
- #   define NK 1024
-diff --color -ruN '--exclude=utilities' '--exclude=*.py' '--exclude=*.sh' '--exclude=*.md' ../polybench-c-openmp-original/linear-algebra/kernels/2mm/2mm.opts ./linear-algebra/kernels/2mm/2mm.opts
+-#   define NI 1024
+-#   define NJ 1024
+-#   define NK 1024
+-#   define NL 1024
++#  ifdef STANDARD_DATASET
++#   define NI 800
++#   define NJ 900
++#   define NK 1100
++#   define NL 1200
+ #  endif
+ 
+ #  ifdef LARGE_DATASET
+diff -ruN --exclude=utilities --exclude='*.py' --exclude='*.sh' --exclude='*.md' ../polybench-c-openmp-original/linear-algebra/kernels/2mm/2mm.opts ./linear-algebra/kernels/2mm/2mm.opts
 --- ../polybench-c-openmp-original/linear-algebra/kernels/2mm/2mm.opts	1970-01-01 01:00:00.000000000 +0100
-+++ ./linear-algebra/kernels/2mm/2mm.opts	2021-03-10 00:28:00.005519288 +0100
++++ ./linear-algebra/kernels/2mm/2mm.opts	2021-03-11 10:19:56.000000000 +0100
 @@ -0,0 +1 @@
 +-Xerr -startonly -Xerr -dunroll=2
-diff --color -ruN '--exclude=utilities' '--exclude=*.py' '--exclude=*.sh' '--exclude=*.md' ../polybench-c-openmp-original/linear-algebra/kernels/3mm/3mm.c ./linear-algebra/kernels/3mm/3mm.c
---- ../polybench-c-openmp-original/linear-algebra/kernels/3mm/3mm.c	2021-03-10 00:14:07.570892852 +0100
-+++ ./linear-algebra/kernels/3mm/3mm.c	2021-01-01 22:07:14.523222345 +0100
+diff -ruN --exclude=utilities --exclude='*.py' --exclude='*.sh' --exclude='*.md' ../polybench-c-openmp-original/linear-algebra/kernels/3mm/3mm.c ./linear-algebra/kernels/3mm/3mm.c
+--- ../polybench-c-openmp-original/linear-algebra/kernels/3mm/3mm.c	2021-03-11 08:55:18.000000000 +0100
++++ ./linear-algebra/kernels/3mm/3mm.c	2021-03-11 10:19:56.000000000 +0100
 @@ -28,9 +28,10 @@
  		DATA_TYPE POLYBENCH_2D(C,NJ,NM,nj,nm),
  		DATA_TYPE POLYBENCH_2D(D,NM,NL,nm,nl))
@@ -216,32 +206,18 @@ diff --color -ruN '--exclude=utilities' '--exclude=*.py' '--exclude=*.sh' '--exc
  
    /* Initialize array(s). */
    init_array (ni, nj, nk, nl, nm,
-diff --color -ruN '--exclude=utilities' '--exclude=*.py' '--exclude=*.sh' '--exclude=*.md' ../polybench-c-openmp-original/linear-algebra/kernels/3mm/3mm.h ./linear-algebra/kernels/3mm/3mm.h
---- ../polybench-c-openmp-original/linear-algebra/kernels/3mm/3mm.h	2021-03-10 00:14:07.570892852 +0100
-+++ ./linear-algebra/kernels/3mm/3mm.h	2021-01-01 22:07:14.523222345 +0100
-@@ -8,9 +8,9 @@
- #ifndef _3MM_H
- # define _3MM_H
- 
--/* Default to STANDARD_DATASET. */
-+/* Default to MEDIUM_DATASET. */
- # if !defined(MINI_DATASET) && !defined(SMALL_DATASET) && !defined(LARGE_DATASET) && !defined(EXTRALARGE_DATASET)
--#  define STANDARD_DATASET
-+#  define MEDIUM_DATASET
- # endif
- 
- /* Do not define anything if the user manually defines the size. */
-@@ -32,12 +32,12 @@
- #   define NM 128
+diff -ruN --exclude=utilities --exclude='*.py' --exclude='*.sh' --exclude='*.md' ../polybench-c-openmp-original/linear-algebra/kernels/3mm/3mm.h ./linear-algebra/kernels/3mm/3mm.h
+--- ../polybench-c-openmp-original/linear-algebra/kernels/3mm/3mm.h	2021-03-11 08:55:18.000000000 +0100
++++ ./linear-algebra/kernels/3mm/3mm.h	2021-03-11 10:19:56.000000000 +0100
+@@ -33,11 +33,11 @@
  #  endif
  
--#  ifdef STANDARD_DATASET /* Default if unspecified. */
+ #  ifdef STANDARD_DATASET /* Default if unspecified. */
 -#   define NI 1024
 -#   define NJ 1024
 -#   define NK 1024
 -#   define NL 1024
 -#   define NM 1024
-+#  ifdef MEDIUM_DATASET /* Default if unspecified. */
 +#   define NI 768
 +#   define NJ 768
 +#   define NK 768
@@ -250,9 +226,9 @@ diff --color -ruN '--exclude=utilities' '--exclude=*.py' '--exclude=*.sh' '--exc
  #  endif
  
  #  ifdef LARGE_DATASET
-diff --color -ruN '--exclude=utilities' '--exclude=*.py' '--exclude=*.sh' '--exclude=*.md' ../polybench-c-openmp-original/linear-algebra/kernels/doitgen/doitgen.c ./linear-algebra/kernels/doitgen/doitgen.c
---- ../polybench-c-openmp-original/linear-algebra/kernels/doitgen/doitgen.c	2021-03-10 00:14:07.570892852 +0100
-+++ ./linear-algebra/kernels/doitgen/doitgen.c	2021-01-01 23:44:52.570844778 +0100
+diff -ruN --exclude=utilities --exclude='*.py' --exclude='*.sh' --exclude='*.md' ../polybench-c-openmp-original/linear-algebra/kernels/doitgen/doitgen.c ./linear-algebra/kernels/doitgen/doitgen.c
+--- ../polybench-c-openmp-original/linear-algebra/kernels/doitgen/doitgen.c	2021-03-11 08:55:18.000000000 +0100
++++ ./linear-algebra/kernels/doitgen/doitgen.c	2021-03-11 10:19:56.000000000 +0100
 @@ -26,7 +26,9 @@
  		DATA_TYPE POLYBENCH_3D(A,NR,NQ,NP,nr,nq,np),
  		DATA_TYPE POLYBENCH_2D(C4,NP,NP,np,np))
@@ -277,33 +253,9 @@ diff --color -ruN '--exclude=utilities' '--exclude=*.py' '--exclude=*.sh' '--exc
  
    /* Initialize array(s). */
    init_array (nr, nq, np,
-diff --color -ruN '--exclude=utilities' '--exclude=*.py' '--exclude=*.sh' '--exclude=*.md' ../polybench-c-openmp-original/linear-algebra/kernels/doitgen/doitgen.h ./linear-algebra/kernels/doitgen/doitgen.h
---- ../polybench-c-openmp-original/linear-algebra/kernels/doitgen/doitgen.h	2021-03-10 00:14:07.570892852 +0100
-+++ ./linear-algebra/kernels/doitgen/doitgen.h	2021-01-01 23:44:52.570844778 +0100
-@@ -8,9 +8,9 @@
- #ifndef DOITGEN_H
- # define DOITGEN_H
- 
--/* Default to STANDARD_DATASET. */
-+/* Default to MEDIUM_DATASET. */
- # if !defined(MINI_DATASET) && !defined(SMALL_DATASET) && !defined(LARGE_DATASET) && !defined(EXTRALARGE_DATASET)
--#  define STANDARD_DATASET
-+#  define MEDIUM_DATASET
- # endif
- 
- /* Do not define anything if the user manually defines the size. */
-@@ -28,7 +28,7 @@
- #   define NP 32
- #  endif
- 
--#  ifdef STANDARD_DATASET /* Default if unspecified. */
-+#  ifdef MEDIUM_DATASET /* Default if unspecified. */
- #   define NQ 128
- #   define NR 128
- #   define NP 128
-diff --color -ruN '--exclude=utilities' '--exclude=*.py' '--exclude=*.sh' '--exclude=*.md' ../polybench-c-openmp-original/linear-algebra/kernels/gemm/gemm.c ./linear-algebra/kernels/gemm/gemm.c
---- ../polybench-c-openmp-original/linear-algebra/kernels/gemm/gemm.c	2021-03-10 00:14:07.570892852 +0100
-+++ ./linear-algebra/kernels/gemm/gemm.c	2021-01-01 23:44:52.574178096 +0100
+diff -ruN --exclude=utilities --exclude='*.py' --exclude='*.sh' --exclude='*.md' ../polybench-c-openmp-original/linear-algebra/kernels/gemm/gemm.c ./linear-algebra/kernels/gemm/gemm.c
+--- ../polybench-c-openmp-original/linear-algebra/kernels/gemm/gemm.c	2021-03-11 08:55:18.000000000 +0100
++++ ./linear-algebra/kernels/gemm/gemm.c	2021-03-11 10:19:56.000000000 +0100
 @@ -29,7 +29,8 @@
  		DATA_TYPE POLYBENCH_2D(A,NI,NK,ni,nk),
  		DATA_TYPE POLYBENCH_2D(B,NK,NJ,nk,nj))
@@ -331,33 +283,9 @@ diff --color -ruN '--exclude=utilities' '--exclude=*.py' '--exclude=*.sh' '--exc
  
    /* Initialize array(s). */
    init_array (ni, nj, nk, &alpha, &beta,
-diff --color -ruN '--exclude=utilities' '--exclude=*.py' '--exclude=*.sh' '--exclude=*.md' ../polybench-c-openmp-original/linear-algebra/kernels/gemm/gemm.h ./linear-algebra/kernels/gemm/gemm.h
---- ../polybench-c-openmp-original/linear-algebra/kernels/gemm/gemm.h	2021-03-10 00:14:07.570892852 +0100
-+++ ./linear-algebra/kernels/gemm/gemm.h	2021-01-01 23:44:52.574178096 +0100
-@@ -8,9 +8,9 @@
- #ifndef GEMM_H
- # define GEMM_H
- 
--/* Default to STANDARD_DATASET. */
-+/* Default to MEDIUM_DATASET. */
- # if !defined(MINI_DATASET) && !defined(SMALL_DATASET) && !defined(LARGE_DATASET) && !defined(EXTRALARGE_DATASET)
--#  define STANDARD_DATASET
-+#  define MEDIUM_DATASET
- # endif
- 
- /* Do not define anything if the user manually defines the size. */
-@@ -28,7 +28,7 @@
- #   define NK 128
- #  endif
- 
--#  ifdef STANDARD_DATASET /* Default if unspecified. */
-+#  ifdef MEDIUM_DATASET /* Default if unspecified. */
- #   define NI 1024
- #   define NJ 1024
- #   define NK 1024
-diff --color -ruN '--exclude=utilities' '--exclude=*.py' '--exclude=*.sh' '--exclude=*.md' ../polybench-c-openmp-original/linear-algebra/kernels/symm/symm.c ./linear-algebra/kernels/symm/symm.c
---- ../polybench-c-openmp-original/linear-algebra/kernels/symm/symm.c	2021-03-10 00:14:07.570892852 +0100
-+++ ./linear-algebra/kernels/symm/symm.c	2021-01-01 23:44:52.574178096 +0100
+diff -ruN --exclude=utilities --exclude='*.py' --exclude='*.sh' --exclude='*.md' ../polybench-c-openmp-original/linear-algebra/kernels/symm/symm.c ./linear-algebra/kernels/symm/symm.c
+--- ../polybench-c-openmp-original/linear-algebra/kernels/symm/symm.c	2021-03-11 08:55:18.000000000 +0100
++++ ./linear-algebra/kernels/symm/symm.c	2021-03-11 10:19:56.000000000 +0100
 @@ -29,7 +29,8 @@
  		DATA_TYPE POLYBENCH_2D(A,NJ,NJ,nj,nj),
  		DATA_TYPE POLYBENCH_2D(B,NI,NJ,ni,nj))
@@ -394,33 +322,9 @@ diff --color -ruN '--exclude=utilities' '--exclude=*.py' '--exclude=*.sh' '--exc
  
    /* Initialize array(s). */
    init_array (ni, nj, &alpha, &beta,
-diff --color -ruN '--exclude=utilities' '--exclude=*.py' '--exclude=*.sh' '--exclude=*.md' ../polybench-c-openmp-original/linear-algebra/kernels/symm/symm.h ./linear-algebra/kernels/symm/symm.h
---- ../polybench-c-openmp-original/linear-algebra/kernels/symm/symm.h	2021-03-10 00:14:07.570892852 +0100
-+++ ./linear-algebra/kernels/symm/symm.h	2021-01-01 23:44:52.574178096 +0100
-@@ -8,9 +8,9 @@
- #ifndef SYMM_H
- # define SYMM_H
- 
--/* Default to STANDARD_DATASET. */
-+/* Default to MEDIUM_DATASET. */
- # if !defined(MINI_DATASET) && !defined(SMALL_DATASET) && !defined(LARGE_DATASET) && !defined(EXTRALARGE_DATASET)
--#  define STANDARD_DATASET
-+#  define MEDIUM_DATASET
- # endif
- 
- /* Do not define anything if the user manually defines the size. */
-@@ -26,7 +26,7 @@
- #   define NJ 128
- #  endif
- 
--#  ifdef STANDARD_DATASET /* Default if unspecified. */
-+#  ifdef MEDIUM_DATASET /* Default if unspecified. */
- #   define NI 1024
- #   define NJ 1024
- #  endif
-diff --color -ruN '--exclude=utilities' '--exclude=*.py' '--exclude=*.sh' '--exclude=*.md' ../polybench-c-openmp-original/linear-algebra/kernels/syr2k/syr2k.c ./linear-algebra/kernels/syr2k/syr2k.c
---- ../polybench-c-openmp-original/linear-algebra/kernels/syr2k/syr2k.c	2021-03-10 00:14:07.570892852 +0100
-+++ ./linear-algebra/kernels/syr2k/syr2k.c	2021-01-01 23:44:52.574178096 +0100
+diff -ruN --exclude=utilities --exclude='*.py' --exclude='*.sh' --exclude='*.md' ../polybench-c-openmp-original/linear-algebra/kernels/syr2k/syr2k.c ./linear-algebra/kernels/syr2k/syr2k.c
+--- ../polybench-c-openmp-original/linear-algebra/kernels/syr2k/syr2k.c	2021-03-11 08:55:18.000000000 +0100
++++ ./linear-algebra/kernels/syr2k/syr2k.c	2021-03-11 10:19:56.000000000 +0100
 @@ -29,7 +29,8 @@
  		DATA_TYPE POLYBENCH_2D(A,NI,NJ,ni,nj),
  		DATA_TYPE POLYBENCH_2D(B,NI,NJ,ni,nj))
@@ -448,33 +352,9 @@ diff --color -ruN '--exclude=utilities' '--exclude=*.py' '--exclude=*.sh' '--exc
  
    /* Initialize array(s). */
    init_array (ni, nj, &alpha, &beta,
-diff --color -ruN '--exclude=utilities' '--exclude=*.py' '--exclude=*.sh' '--exclude=*.md' ../polybench-c-openmp-original/linear-algebra/kernels/syr2k/syr2k.h ./linear-algebra/kernels/syr2k/syr2k.h
---- ../polybench-c-openmp-original/linear-algebra/kernels/syr2k/syr2k.h	2021-03-10 00:14:07.570892852 +0100
-+++ ./linear-algebra/kernels/syr2k/syr2k.h	2021-01-01 23:44:52.574178096 +0100
-@@ -8,9 +8,9 @@
- #ifndef SYR2K_H
- # define SYR2K_H
- 
--/* Default to STANDARD_DATASET. */
-+/* Default to MEDIUM_DATASET. */
- # if !defined(MINI_DATASET) && !defined(SMALL_DATASET) && !defined(LARGE_DATASET) && !defined(EXTRALARGE_DATASET)
--#  define STANDARD_DATASET
-+#  define MEDIUM_DATASET
- # endif
- 
- /* Do not define anything if the user manually defines the size. */
-@@ -26,7 +26,7 @@
- #   define NJ 128
- #  endif
- 
--#  ifdef STANDARD_DATASET /* Default if unspecified. */
-+#  ifdef MEDIUM_DATASET /* Default if unspecified. */
- #   define NI 1024
- #   define NJ 1024
- #  endif
-diff --color -ruN '--exclude=utilities' '--exclude=*.py' '--exclude=*.sh' '--exclude=*.md' ../polybench-c-openmp-original/linear-algebra/kernels/syrk/syrk.c ./linear-algebra/kernels/syrk/syrk.c
---- ../polybench-c-openmp-original/linear-algebra/kernels/syrk/syrk.c	2021-03-10 00:14:07.570892852 +0100
-+++ ./linear-algebra/kernels/syrk/syrk.c	2021-01-01 23:44:52.574178096 +0100
+diff -ruN --exclude=utilities --exclude='*.py' --exclude='*.sh' --exclude='*.md' ../polybench-c-openmp-original/linear-algebra/kernels/syrk/syrk.c ./linear-algebra/kernels/syrk/syrk.c
+--- ../polybench-c-openmp-original/linear-algebra/kernels/syrk/syrk.c	2021-03-11 08:55:18.000000000 +0100
++++ ./linear-algebra/kernels/syrk/syrk.c	2021-03-11 10:19:56.000000000 +0100
 @@ -28,7 +28,8 @@
  		DATA_TYPE POLYBENCH_2D(C,NI,NI,ni,ni),
  		DATA_TYPE POLYBENCH_2D(A,NI,NJ,ni,nj))
@@ -500,33 +380,9 @@ diff --color -ruN '--exclude=utilities' '--exclude=*.py' '--exclude=*.sh' '--exc
  
    /* Initialize array(s). */
    init_array (ni, nj, &alpha, &beta, POLYBENCH_ARRAY(C), POLYBENCH_ARRAY(A));
-diff --color -ruN '--exclude=utilities' '--exclude=*.py' '--exclude=*.sh' '--exclude=*.md' ../polybench-c-openmp-original/linear-algebra/kernels/syrk/syrk.h ./linear-algebra/kernels/syrk/syrk.h
---- ../polybench-c-openmp-original/linear-algebra/kernels/syrk/syrk.h	2021-03-10 00:14:07.570892852 +0100
-+++ ./linear-algebra/kernels/syrk/syrk.h	2021-01-01 23:44:52.574178096 +0100
-@@ -8,9 +8,9 @@
- #ifndef SYRK_H
- # define SYRK_H
- 
--/* Default to STANDARD_DATASET. */
-+/* Default to MEDIUM_DATASET. */
- # if !defined(MINI_DATASET) && !defined(SMALL_DATASET) && !defined(LARGE_DATASET) && !defined(EXTRALARGE_DATASET)
--#  define STANDARD_DATASET
-+#  define MEDIUM_DATASET
- # endif
- 
- /* Do not define anything if the user manually defines the size. */
-@@ -26,7 +26,7 @@
- #   define NJ 128
- #  endif
- 
--#  ifdef STANDARD_DATASET /* Default if unspecified. */
-+#  ifdef MEDIUM_DATASET /* Default if unspecified. */
- #   define NI 1024
- #   define NJ 1024
- #  endif
-diff --color -ruN '--exclude=utilities' '--exclude=*.py' '--exclude=*.sh' '--exclude=*.md' ../polybench-c-openmp-original/medley/floyd-warshall/floyd-warshall.c ./medley/floyd-warshall/floyd-warshall.c
---- ../polybench-c-openmp-original/medley/floyd-warshall/floyd-warshall.c	2021-03-10 00:14:07.567559513 +0100
-+++ ./medley/floyd-warshall/floyd-warshall.c	2021-01-01 22:05:55.053540799 +0100
+diff -ruN --exclude=utilities --exclude='*.py' --exclude='*.sh' --exclude='*.md' ../polybench-c-openmp-original/medley/floyd-warshall/floyd-warshall.c ./medley/floyd-warshall/floyd-warshall.c
+--- ../polybench-c-openmp-original/medley/floyd-warshall/floyd-warshall.c	2021-03-11 08:55:18.000000000 +0100
++++ ./medley/floyd-warshall/floyd-warshall.c	2021-03-11 10:19:56.000000000 +0100
 @@ -25,7 +25,8 @@
  void init_array (int n,
  		 DATA_TYPE POLYBENCH_2D(path,N,N,n,n))
@@ -579,30 +435,9 @@ diff --color -ruN '--exclude=utilities' '--exclude=*.py' '--exclude=*.sh' '--exc
  
  
    /* Initialize array(s). */
-diff --color -ruN '--exclude=utilities' '--exclude=*.py' '--exclude=*.sh' '--exclude=*.md' ../polybench-c-openmp-original/medley/floyd-warshall/floyd-warshall.h ./medley/floyd-warshall/floyd-warshall.h
---- ../polybench-c-openmp-original/medley/floyd-warshall/floyd-warshall.h	2021-03-10 00:14:07.567559513 +0100
-+++ ./medley/floyd-warshall/floyd-warshall.h	2021-01-01 22:05:55.053540799 +0100
-@@ -8,9 +8,9 @@
- #ifndef FLOYD_WARSHALL_H
- # define FLOYD_WARSHALL_H
- 
--/* Default to STANDARD_DATASET. */
-+/* Default to MEDIUM_DATASET. */
- # if !defined(MINI_DATASET) && !defined(SMALL_DATASET) && !defined(LARGE_DATASET) && !defined(EXTRALARGE_DATASET)
--#  define STANDARD_DATASET
-+#  define MEDIUM_DATASET
- # endif
- 
- /* Do not define anything if the user manually defines the size. */
-@@ -24,7 +24,7 @@
- #   define N 128
- #  endif
- 
--#  ifdef STANDARD_DATASET /* Default if unspecified. */
-+#  ifdef MEDIUM_DATASET /* Default if unspecified. */
- #   define N 1024
- #  endif
- 
+diff -ruN --exclude=utilities --exclude='*.py' --exclude='*.sh' --exclude='*.md' ../polybench-c-openmp-original/medley/floyd-warshall/floyd-warshall.h ./medley/floyd-warshall/floyd-warshall.h
+--- ../polybench-c-openmp-original/medley/floyd-warshall/floyd-warshall.h	2021-03-11 08:55:18.000000000 +0100
++++ ./medley/floyd-warshall/floyd-warshall.h	2021-03-11 10:19:56.000000000 +0100
 @@ -39,9 +39,32 @@
  
  # define _PB_N POLYBENCH_LOOP_BOUND(N,n)
@@ -638,14 +473,14 @@ diff --color -ruN '--exclude=utilities' '--exclude=*.py' '--exclude=*.sh' '--exc
  # endif
  
  
-diff --color -ruN '--exclude=utilities' '--exclude=*.py' '--exclude=*.sh' '--exclude=*.md' ../polybench-c-openmp-original/medley/floyd-warshall/floyd-warshall.opts ./medley/floyd-warshall/floyd-warshall.opts
+diff -ruN --exclude=utilities --exclude='*.py' --exclude='*.sh' --exclude='*.md' ../polybench-c-openmp-original/medley/floyd-warshall/floyd-warshall.opts ./medley/floyd-warshall/floyd-warshall.opts
 --- ../polybench-c-openmp-original/medley/floyd-warshall/floyd-warshall.opts	1970-01-01 01:00:00.000000000 +0100
-+++ ./medley/floyd-warshall/floyd-warshall.opts	2020-12-13 23:30:59.757309234 +0100
++++ ./medley/floyd-warshall/floyd-warshall.opts	2021-03-11 10:19:56.000000000 +0100
 @@ -0,0 +1 @@
 +-Xerr -startonly
-diff --color -ruN '--exclude=utilities' '--exclude=*.py' '--exclude=*.sh' '--exclude=*.md' ../polybench-c-openmp-original/medley/reg_detect/reg_detect.c ./medley/reg_detect/reg_detect.c
---- ../polybench-c-openmp-original/medley/reg_detect/reg_detect.c	2021-03-10 00:14:07.567559513 +0100
-+++ ./medley/reg_detect/reg_detect.c	2021-01-07 21:19:20.166081051 +0100
+diff -ruN --exclude=utilities --exclude='*.py' --exclude='*.sh' --exclude='*.md' ../polybench-c-openmp-original/medley/reg_detect/reg_detect.c ./medley/reg_detect/reg_detect.c
+--- ../polybench-c-openmp-original/medley/reg_detect/reg_detect.c	2021-03-11 08:55:18.000000000 +0100
++++ ./medley/reg_detect/reg_detect.c	2021-03-11 10:19:56.000000000 +0100
 @@ -27,7 +27,8 @@
  		DATA_TYPE POLYBENCH_2D(mean,MAXGRID,MAXGRID,maxgrid,maxgrid),
  		DATA_TYPE POLYBENCH_2D(path,MAXGRID,MAXGRID,maxgrid,maxgrid))
@@ -701,30 +536,9 @@ diff --color -ruN '--exclude=utilities' '--exclude=*.py' '--exclude=*.sh' '--exc
    
    /* Initialize array(s). */
    init_array (maxgrid,
-diff --color -ruN '--exclude=utilities' '--exclude=*.py' '--exclude=*.sh' '--exclude=*.md' ../polybench-c-openmp-original/medley/reg_detect/reg_detect.h ./medley/reg_detect/reg_detect.h
---- ../polybench-c-openmp-original/medley/reg_detect/reg_detect.h	2021-03-10 00:14:07.567559513 +0100
-+++ ./medley/reg_detect/reg_detect.h	2021-01-07 21:19:20.166081051 +0100
-@@ -8,9 +8,9 @@
- #ifndef REG_DETECT_H
- # define REG_DETECT_H
- 
--/* Default to STANDARD_DATASET. */
-+/* Default to MEDIUM_DATASET. */
- # if !defined(MINI_DATASET) && !defined(SMALL_DATASET) && !defined(LARGE_DATASET) && !defined(EXTRALARGE_DATASET)
--#  define STANDARD_DATASET
-+#  define MEDIUM_DATASET
- # endif
- 
- /* Do not define anything if the user manually defines the size. */
-@@ -28,7 +28,7 @@
- #   define MAXGRID 6
- #  endif
- 
--#  ifdef STANDARD_DATASET /* Default if unspecified. */
-+#  ifdef MEDIUM_DATASET /* Default if unspecified. */
- #   define NITER 10000
- #   define LENGTH 64
- #   define MAXGRID 6
+diff -ruN --exclude=utilities --exclude='*.py' --exclude='*.sh' --exclude='*.md' ../polybench-c-openmp-original/medley/reg_detect/reg_detect.h ./medley/reg_detect/reg_detect.h
+--- ../polybench-c-openmp-original/medley/reg_detect/reg_detect.h	2021-03-11 08:55:18.000000000 +0100
++++ ./medley/reg_detect/reg_detect.h	2021-03-11 10:19:56.000000000 +0100
 @@ -52,8 +52,8 @@
  # define _PB_MAXGRID POLYBENCH_LOOP_BOUND(MAXGRID,maxgrid)
  
@@ -736,9 +550,9 @@ diff --color -ruN '--exclude=utilities' '--exclude=*.py' '--exclude=*.sh' '--exc
  # endif
  
  
-diff --color -ruN '--exclude=utilities' '--exclude=*.py' '--exclude=*.sh' '--exclude=*.md' ../polybench-c-openmp-original/stencils/fdtd-2d/fdtd-2d.c ./stencils/fdtd-2d/fdtd-2d.c
---- ../polybench-c-openmp-original/stencils/fdtd-2d/fdtd-2d.c	2021-03-10 00:14:07.567559513 +0100
-+++ ./stencils/fdtd-2d/fdtd-2d.c	2021-01-07 21:19:20.166081051 +0100
+diff -ruN --exclude=utilities --exclude='*.py' --exclude='*.sh' --exclude='*.md' ../polybench-c-openmp-original/stencils/fdtd-2d/fdtd-2d.c ./stencils/fdtd-2d/fdtd-2d.c
+--- ../polybench-c-openmp-original/stencils/fdtd-2d/fdtd-2d.c	2021-03-11 08:55:18.000000000 +0100
++++ ./stencils/fdtd-2d/fdtd-2d.c	2021-03-11 10:19:56.000000000 +0100
 @@ -30,7 +30,8 @@
  		 DATA_TYPE POLYBENCH_2D(hz,NX,NY,nx,ny),
  		 DATA_TYPE POLYBENCH_1D(_fict_,TMAX,tmax))
@@ -794,33 +608,9 @@ diff --color -ruN '--exclude=utilities' '--exclude=*.py' '--exclude=*.sh' '--exc
  
    /* Initialize array(s). */
    init_array (tmax, nx, ny,
-diff --color -ruN '--exclude=utilities' '--exclude=*.py' '--exclude=*.sh' '--exclude=*.md' ../polybench-c-openmp-original/stencils/fdtd-2d/fdtd-2d.h ./stencils/fdtd-2d/fdtd-2d.h
---- ../polybench-c-openmp-original/stencils/fdtd-2d/fdtd-2d.h	2021-03-10 00:14:07.567559513 +0100
-+++ ./stencils/fdtd-2d/fdtd-2d.h	2021-01-07 21:19:20.166081051 +0100
-@@ -8,9 +8,9 @@
- #ifndef FDTD_2D_H
- # define FDTD_2D_H
- 
--/* Default to STANDARD_DATASET. */
-+/* Default to MEDIUM_DATASET. */
- # if !defined(MINI_DATASET) && !defined(SMALL_DATASET) && !defined(LARGE_DATASET) && !defined(EXTRALARGE_DATASET)
--#  define STANDARD_DATASET
-+#  define MEDIUM_DATASET
- # endif
- 
- /* Do not define anything if the user manually defines the size. */
-@@ -28,7 +28,7 @@
- #   define NY 500
- #  endif
- 
--#  ifdef STANDARD_DATASET /* Default if unspecified. */
-+#  ifdef MEDIUM_DATASET /* Default if unspecified. */
- #   define TMAX 50
- #   define NX 1000
- #   define NY 1000
-diff --color -ruN '--exclude=utilities' '--exclude=*.py' '--exclude=*.sh' '--exclude=*.md' ../polybench-c-openmp-original/stencils/jacobi-1d-imper/jacobi-1d-imper.c ./stencils/jacobi-1d-imper/jacobi-1d-imper.c
---- ../polybench-c-openmp-original/stencils/jacobi-1d-imper/jacobi-1d-imper.c	2021-03-10 00:14:07.567559513 +0100
-+++ ./stencils/jacobi-1d-imper/jacobi-1d-imper.c	2021-01-07 21:19:20.166081051 +0100
+diff -ruN --exclude=utilities --exclude='*.py' --exclude='*.sh' --exclude='*.md' ../polybench-c-openmp-original/stencils/jacobi-1d-imper/jacobi-1d-imper.c ./stencils/jacobi-1d-imper/jacobi-1d-imper.c
+--- ../polybench-c-openmp-original/stencils/jacobi-1d-imper/jacobi-1d-imper.c	2021-03-11 08:55:18.000000000 +0100
++++ ./stencils/jacobi-1d-imper/jacobi-1d-imper.c	2021-03-11 10:19:56.000000000 +0100
 @@ -26,7 +26,7 @@
  		 DATA_TYPE POLYBENCH_1D(A,N,n),
  		 DATA_TYPE POLYBENCH_1D(B,N,n))
@@ -860,30 +650,9 @@ diff --color -ruN '--exclude=utilities' '--exclude=*.py' '--exclude=*.sh' '--exc
  
  
    /* Initialize array(s). */
-diff --color -ruN '--exclude=utilities' '--exclude=*.py' '--exclude=*.sh' '--exclude=*.md' ../polybench-c-openmp-original/stencils/jacobi-1d-imper/jacobi-1d-imper.h ./stencils/jacobi-1d-imper/jacobi-1d-imper.h
---- ../polybench-c-openmp-original/stencils/jacobi-1d-imper/jacobi-1d-imper.h	2021-03-10 00:14:07.567559513 +0100
-+++ ./stencils/jacobi-1d-imper/jacobi-1d-imper.h	2021-01-07 21:19:20.166081051 +0100
-@@ -8,9 +8,9 @@
- #ifndef JACOBI_1D_IMPER_H
- # define JACOBI_1D_IMPER_H
- 
--/* Default to STANDARD_DATASET. */
-+/* Default to MEDIUM_DATASET. */
- # if !defined(MINI_DATASET) && !defined(SMALL_DATASET) && !defined(LARGE_DATASET) && !defined(EXTRALARGE_DATASET)
--#  define STANDARD_DATASET
-+#  define MEDIUM_DATASET
- # endif
- 
- /* Do not define anything if the user manually defines the size. */
-@@ -26,7 +26,7 @@
- #   define N 1000
- #  endif
- 
--#  ifdef STANDARD_DATASET /* Default if unspecified. */
-+#  ifdef MEDIUM_DATASET /* Default if unspecified. */
- #   define TSTEPS 100
- #   define N 10000
- #  endif
+diff -ruN --exclude=utilities --exclude='*.py' --exclude='*.sh' --exclude='*.md' ../polybench-c-openmp-original/stencils/jacobi-1d-imper/jacobi-1d-imper.h ./stencils/jacobi-1d-imper/jacobi-1d-imper.h
+--- ../polybench-c-openmp-original/stencils/jacobi-1d-imper/jacobi-1d-imper.h	2021-03-11 08:55:18.000000000 +0100
++++ ./stencils/jacobi-1d-imper/jacobi-1d-imper.h	2021-03-11 10:19:56.000000000 +0100
 @@ -47,7 +47,7 @@
  
  # ifndef DATA_TYPE
@@ -893,9 +662,9 @@ diff --color -ruN '--exclude=utilities' '--exclude=*.py' '--exclude=*.sh' '--exc
  # endif
  
  
-diff --color -ruN '--exclude=utilities' '--exclude=*.py' '--exclude=*.sh' '--exclude=*.md' ../polybench-c-openmp-original/stencils/jacobi-2d-imper/jacobi-2d-imper.c ./stencils/jacobi-2d-imper/jacobi-2d-imper.c
---- ../polybench-c-openmp-original/stencils/jacobi-2d-imper/jacobi-2d-imper.c	2021-03-10 00:14:07.567559513 +0100
-+++ ./stencils/jacobi-2d-imper/jacobi-2d-imper.c	2021-01-07 21:19:20.166081051 +0100
+diff -ruN --exclude=utilities --exclude='*.py' --exclude='*.sh' --exclude='*.md' ../polybench-c-openmp-original/stencils/jacobi-2d-imper/jacobi-2d-imper.c ./stencils/jacobi-2d-imper/jacobi-2d-imper.c
+--- ../polybench-c-openmp-original/stencils/jacobi-2d-imper/jacobi-2d-imper.c	2021-03-11 08:55:18.000000000 +0100
++++ ./stencils/jacobi-2d-imper/jacobi-2d-imper.c	2021-03-11 10:19:56.000000000 +0100
 @@ -26,7 +26,8 @@
  		 DATA_TYPE POLYBENCH_2D(A,N,N,n,n),
  		 DATA_TYPE POLYBENCH_2D(B,N,N,n,n))
@@ -931,33 +700,9 @@ diff --color -ruN '--exclude=utilities' '--exclude=*.py' '--exclude=*.sh' '--exc
  
  
    /* Initialize array(s). */
-diff --color -ruN '--exclude=utilities' '--exclude=*.py' '--exclude=*.sh' '--exclude=*.md' ../polybench-c-openmp-original/stencils/jacobi-2d-imper/jacobi-2d-imper.h ./stencils/jacobi-2d-imper/jacobi-2d-imper.h
---- ../polybench-c-openmp-original/stencils/jacobi-2d-imper/jacobi-2d-imper.h	2021-03-10 00:14:07.567559513 +0100
-+++ ./stencils/jacobi-2d-imper/jacobi-2d-imper.h	2021-01-07 21:19:20.166081051 +0100
-@@ -8,9 +8,9 @@
- #ifndef JACOBI_2D_IMPER_H
- # define JACOBI_2D_IMPER_H
- 
--/* Default to STANDARD_DATASET. */
-+/* Default to MEDIUM_DATASET. */
- # if !defined(MINI_DATASET) && !defined(SMALL_DATASET) && !defined(LARGE_DATASET) && !defined(EXTRALARGE_DATASET)
--#  define STANDARD_DATASET
-+#  define MEDIUM_DATASET
- # endif
- 
- /* Do not define anything if the user manually defines the size. */
-@@ -26,7 +26,7 @@
- #   define N 500
- #  endif
- 
--#  ifdef STANDARD_DATASET /* Default if unspecified. */
-+#  ifdef MEDIUM_DATASET /* Default if unspecified. */
- #   define TSTEPS 20
- #   define N 1000
- #  endif
-diff --color -ruN '--exclude=utilities' '--exclude=*.py' '--exclude=*.sh' '--exclude=*.md' ../polybench-c-openmp-original/stencils/seidel-2d/seidel-2d.c ./stencils/seidel-2d/seidel-2d.c
---- ../polybench-c-openmp-original/stencils/seidel-2d/seidel-2d.c	2021-03-10 00:14:07.567559513 +0100
-+++ ./stencils/seidel-2d/seidel-2d.c	2021-01-07 21:19:20.166081051 +0100
+diff -ruN --exclude=utilities --exclude='*.py' --exclude='*.sh' --exclude='*.md' ../polybench-c-openmp-original/stencils/seidel-2d/seidel-2d.c ./stencils/seidel-2d/seidel-2d.c
+--- ../polybench-c-openmp-original/stencils/seidel-2d/seidel-2d.c	2021-03-11 08:55:18.000000000 +0100
++++ ./stencils/seidel-2d/seidel-2d.c	2021-03-11 10:19:56.000000000 +0100
 @@ -25,7 +25,8 @@
  void init_array (int n,
  		 DATA_TYPE POLYBENCH_2D(A,N,N,n,n))
@@ -986,27 +731,3 @@ diff --color -ruN '--exclude=utilities' '--exclude=*.py' '--exclude=*.sh' '--exc
  
  
    /* Initialize array(s). */
-diff --color -ruN '--exclude=utilities' '--exclude=*.py' '--exclude=*.sh' '--exclude=*.md' ../polybench-c-openmp-original/stencils/seidel-2d/seidel-2d.h ./stencils/seidel-2d/seidel-2d.h
---- ../polybench-c-openmp-original/stencils/seidel-2d/seidel-2d.h	2021-03-10 00:14:07.567559513 +0100
-+++ ./stencils/seidel-2d/seidel-2d.h	2021-01-07 21:19:20.166081051 +0100
-@@ -8,9 +8,9 @@
- #ifndef SEIDEL_2D_H
- # define SEIDEL_2D_H
- 
--/* Default to STANDARD_DATASET. */
-+/* Default to MEDIUM_DATASET. */
- # if !defined(MINI_DATASET) && !defined(SMALL_DATASET) && !defined(LARGE_DATASET) && !defined(EXTRALARGE_DATASET)
--#  define STANDARD_DATASET
-+#  define MEDIUM_DATASET
- # endif
- 
- /* Do not define anything if the user manually defines the size. */
-@@ -26,7 +26,7 @@
- #   define N 500
- #  endif
- 
--#  ifdef STANDARD_DATASET /* Default if unspecified. */
-+#  ifdef MEDIUM_DATASET /* Default if unspecified. */
- #   define TSTEPS 20
- #   define N 1000
- #  endif

@@ -8,9 +8,9 @@
 #ifndef DOITGEN_H
 # define DOITGEN_H
 
-/* Default to MEDIUM_DATASET. */
+/* Default to STANDARD_DATASET. */
 # if !defined(MINI_DATASET) && !defined(SMALL_DATASET) && !defined(LARGE_DATASET) && !defined(EXTRALARGE_DATASET)
-#  define MEDIUM_DATASET
+#  define STANDARD_DATASET
 # endif
 
 /* Do not define anything if the user manually defines the size. */
@@ -28,7 +28,7 @@
 #   define NP 32
 #  endif
 
-#  ifdef MEDIUM_DATASET /* Default if unspecified. */
+#  ifdef STANDARD_DATASET /* Default if unspecified. */
 #   define NQ 128
 #   define NR 128
 #   define NP 128
