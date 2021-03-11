@@ -8,9 +8,9 @@
 #ifndef _2MM_H
 # define _2MM_H
 
-/* Default to MEDIUM_DATASET. */
+/* Default to STANDARD_DATASET. */
 # if !defined(MINI_DATASET) && !defined(SMALL_DATASET) && !defined(LARGE_DATASET) && !defined(EXTRALARGE_DATASET)
-#  define MEDIUM_DATASET
+#  define STANDARD_DATASET
 # endif
 
 /* Do not define anything if the user manually defines the size. */
@@ -30,11 +30,11 @@
 #   define NL 128
 #  endif
 
-#  ifdef MEDIUM_DATASET /* Default if unspecified. */
-#   define NI 1024
-#   define NJ 1024
-#   define NK 1024
-#   define NL 1024
+#  ifdef STANDARD_DATASET
+#   define NI 800
+#   define NJ 900
+#   define NK 1100
+#   define NL 1200
 #  endif
 
 #  ifdef LARGE_DATASET
