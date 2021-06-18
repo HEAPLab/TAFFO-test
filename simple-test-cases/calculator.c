@@ -3,8 +3,8 @@
 
 
 #define DO(op) { \
-  float __attribute__((annotate("scalar(range(-3000, +3000))"))) tmp1; \
-  float __attribute__((annotate("scalar(range(-3000, +3000))"))) tmp2; \
+  float __attribute__((annotate("scalar(range(-3000, +3000) final)"))) tmp1; \
+  float __attribute__((annotate("scalar(range(-3000, +3000) final)"))) tmp2; \
   tmp2 = stack[--sp]; \
   tmp1 = stack[--sp]; \
   stack[sp++] = tmp1 op tmp2; \

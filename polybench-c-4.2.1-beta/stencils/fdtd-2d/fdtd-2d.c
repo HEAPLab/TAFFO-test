@@ -31,8 +31,8 @@ void init_array (int tmax,
 		 DATA_TYPE POLYBENCH_2D(hz,NX,NY,nx,ny),
 		 DATA_TYPE POLYBENCH_1D(_fict_,TMAX,tmax))
 {
-  int i __attribute__((annotate("scalar(range(-" PB_XSTR(NX) ", " PB_XSTR(NX) "))")));
-  int j __attribute__((annotate("scalar(range(-" PB_XSTR(NY) ", " PB_XSTR(NY) "))")));
+  int i __attribute__((annotate("scalar(range(-" PB_XSTR(NX) ", " PB_XSTR(NX) ") final)")));
+  int j __attribute__((annotate("scalar(range(-" PB_XSTR(NY) ", " PB_XSTR(NY) ") final)")));
 
   for (i = 0; i < tmax; i++)
     _fict_[i] = (DATA_TYPE) i;
@@ -128,9 +128,9 @@ int main(int argc, char** argv)
   int ny = NY;
 
   /* Variable declaration/allocation. */
-  POLYBENCH_2D_ARRAY_DECL(ex,DATA_TYPE __attribute__((annotate("scalar()"))),NX,NY,nx,ny);
-  POLYBENCH_2D_ARRAY_DECL(ey,DATA_TYPE __attribute__((annotate("scalar()"))),NX,NY,nx,ny);
-  POLYBENCH_2D_ARRAY_DECL(hz,DATA_TYPE __attribute__((annotate("scalar()"))),NX,NY,nx,ny);
+  POLYBENCH_2D_ARRAY_DECL(ex,DATA_TYPE __attribute__((annotate("target('ex') scalar()"))),NX,NY,nx,ny);
+  POLYBENCH_2D_ARRAY_DECL(ey,DATA_TYPE __attribute__((annotate("target('ey') scalar()"))),NX,NY,nx,ny);
+  POLYBENCH_2D_ARRAY_DECL(hz,DATA_TYPE __attribute__((annotate("target('hz') scalar()"))),NX,NY,nx,ny);
   POLYBENCH_1D_ARRAY_DECL(_fict_,DATA_TYPE __attribute__((annotate("scalar()"))),TMAX,tmax);
 
   /* Initialize array(s). */

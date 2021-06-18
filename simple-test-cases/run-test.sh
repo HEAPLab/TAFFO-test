@@ -36,11 +36,12 @@ recompile_one() {
     fi
   fi
   out=${1%.*}.out
+  mkdir -p build
   printf '[BUILD] [....] %s' "$input"
   if [[ $FLOAT -eq 1 ]]; then
     args="$args -float-output ${1%.*}.float.out"
   fi
-  $TIMEOUT "$SCRIPTPATH"/../magiclang2.sh "$args" -o "$out" "$input" $extraargs -debug 2> "$input".log
+  $TIMEOUT taffo "$args" -o "$out" "$input" $extraargs -debug -temp-dir ./build 2> "$input".log
   bpid_fc=$?
   if [[ $bpid_fc -ne 0 ]]; then
     code='FAIL'
@@ -55,7 +56,7 @@ recompile_one() {
       for testin in "$SCRIPTPATH"/input/${1%.*}.*; do
         [ -f "$testin" ] || continue
         printf '[TEST ] [....] %s' $(basename "$testin")
-        testout=$(mktemp -t $(basename "$testin"))
+        testout=$(mktemp -t $(basename "$testin")XXX)
         "$out" < "$testin" > "$testout"
         correctout=${SCRIPTPATH}/output/$(basename "$testin")
         logf="$SCRIPTPATH"/$(basename "$testin").log
@@ -75,9 +76,9 @@ recompile_one() {
 }
 
 if [[ "$1" == "clean" ]]; then
-  rm "$SCRIPTPATH"/*.magiclangtmp.*
-  rm "$SCRIPTPATH"/*.out
-  rm "$SCRIPTPATH"/*.log
+  rm -f "$SCRIPTPATH"/build/*.taffotmp.*
+  rm -f "$SCRIPTPATH"/*.out
+  rm -f "$SCRIPTPATH"/*.log
   exit 0
 fi
 
@@ -95,7 +96,7 @@ else
 fi
 
 for fn in $files; do
-  if [[ ( "$fn" != *.magiclangtmp.ll ) && ( "$fn" != *NOT-WORKING-YET* ) ]]; then
+  if [[ ( "$fn" != *.taffotmp.ll ) && ( "$fn" != *NOT-WORKING-YET* ) ]]; then
     recompile_one "$fn" || exit $?
   fi
 done

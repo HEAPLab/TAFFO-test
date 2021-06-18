@@ -10,7 +10,7 @@ if [[ -z $(which $TIMEOUT) ]]; then
   TIMEOUT='gtimeout'
 fi
 if [[ ! ( -z $(which $TIMEOUT) ) ]]; then
-  TIMEOUT="$TIMEOUT 20"
+  TIMEOUT="$TIMEOUT 120"
 else
   printf 'warning: timeout command not found\n'
   TIMEOUT=''
@@ -23,6 +23,10 @@ else
 fi
 if [[ -z "$OPT" ]]; then OPT=${llvmbin}opt; fi
 
+if [[ -z $(which taffo) ]]; then
+  echo -e '\031[33m'"Error"'\033[39m'" taffo command not found. Install taffo and make sure the place where you installed it is in your PATH!";
+fi
+
 
 compile_one()
 {
@@ -30,9 +34,10 @@ compile_one()
   xparams=$2
   benchdir=$(dirname $benchpath)
   benchname=$(basename $benchdir)
-  $TIMEOUT ../magiclang2.sh \
+  $TIMEOUT taffo \
     -o build/"$benchname".out \
     -float-output build/"$benchname".float.out \
+    -temp-dir build \
     "$benchpath" \
     ./utilities/polybench.c \
     -I"$benchdir" \
@@ -41,15 +46,49 @@ compile_one()
     $xparams \
     -debug-taffo \
     -lm \
-    2> build/${benchname}.log
+    2> build/${benchname}.log || return $?
     
   if [[ $RUN_METRICS -ne 0 ]]; then
     mkdir -p results-out
-    $INSTMIX build/"$benchname".out.5.magiclangtmp.ll > results-out/${benchname}.imix.txt
-    $TAFFO_MLFEAT build/"$benchname".out.5.magiclangtmp.ll > results-out/${benchname}.mlfeat.txt
-    $OPT -S -O3 -o build/"$benchname".float.out.ll build/"$benchname".out.1.magiclangtmp.ll
-    $INSTMIX build/"$benchname".float.out.ll > results-out/${benchname}.float.imix.txt
-    $TAFFO_MLFEAT build/"$benchname".float.out.ll > results-out/${benchname}.float.mlfeat.txt
+    taffo-instmix build/"$benchname".out.5.taffotmp.ll > results-out/${benchname}.imix.txt
+    taffo-mlfeat build/"$benchname".out.5.taffotmp.ll > results-out/${benchname}.mlfeat.txt
+    $OPT -S -O3 -o build/"$benchname".float.out.ll build/"$benchname".out.1.taffotmp.ll
+    taffo-instmix build/"$benchname".float.out.ll > results-out/${benchname}.float.imix.txt
+    taffo-mlfeat build/"$benchname".float.out.ll > results-out/${benchname}.float.mlfeat.txt
+  fi
+}
+
+read_opts()
+{
+  benchpath=$1
+  optspath=$(dirname ${benchpath})/$(basename ${benchpath} .c).opts
+  if [ -a ${optspath} ]; then
+    opts=$(tr '\n' ' ' < ${optspath})
+  else
+    opts=
+  fi
+  if [[ "$opts" != *-Xerr* ]]; then
+      opts="$opts -Xerr -nounroll -Xerr -startonly"
+  fi
+  if [[ "$opts" != *-Xvra* ]]; then
+      opts="$opts -Xvra -max-unroll=0"
+  fi
+  
+  # filter opts if errorprop is disabled
+  if [[ -z $ERRORPROP ]]; then
+    skip=0
+    for opt in $opts; do
+      if [[ ( $opt == '-Xerr' ) && ( $skip -eq 0 ) ]]; then
+        skip=$((skip + 2))
+      fi
+      if [[ $skip -eq 0 ]]; then
+        printf '%s ' "$opt"
+      else
+        skip=$((skip - 1))
+      fi
+    done
+  else
+    echo "$opts"
   fi
 }
 
@@ -64,6 +103,7 @@ ONLY='.*'
 TOT='32'
 D_CONF="CONF_GOOD"
 RUN_METRICS=0
+ERRORPROP='-enable-err'
 
 for arg; do
   case $arg in
@@ -87,6 +127,9 @@ for arg; do
     --tot=*)
       TOT="${arg#*=}"
       ;;
+    --no-err)
+      ERRORPROP=''
+      ;;
     metrics)
       RUN_METRICS=1
       ;;
@@ -105,11 +148,13 @@ for bench in $all_benchs; do
   if [[ "$bench" =~ $ONLY ]]; then
     skipped_all=0
     printf '[....] %s' "$bench"
+    opts=$(read_opts ${bench})
     compile_one "$bench" \
-      "-O3 -g -Xvra -propagate-all \
+      "-O3 \
       -DPOLYBENCH_TIME -DPOLYBENCH_DUMP_ARRAYS -DPOLYBENCH_STACK_ARRAYS \
       -D$D_CONF -D$D_STANDARD_DATASET \
-      -Xdta -totalbits -Xdta $TOT"
+      -Xdta -totalbits -Xdta $TOT \
+      $ERRORPROP $opts"
     bpid_fc=$?
     if [[ $bpid_fc == 0 ]]; then
       bpid_fc=' ok '

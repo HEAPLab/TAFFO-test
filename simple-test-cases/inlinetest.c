@@ -10,7 +10,7 @@ float hello(__attribute__((annotate("scalar()"))) float abc) __attribute__((alwa
 int main(int argc, char *argv[]) {
 	__attribute__((annotate("scalar()"))) float test = 123.0;
 	test = hello(test);
-	printf("%f\n", test);
+	printf("%a\n", test);
 	return 0;
 }
 

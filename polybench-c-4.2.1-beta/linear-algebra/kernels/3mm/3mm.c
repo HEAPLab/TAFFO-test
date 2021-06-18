@@ -127,7 +127,7 @@ int main(int argc, char** argv)
   POLYBENCH_2D_ARRAY_DECL(F, DATA_TYPE __attribute__((annotate("scalar(range(-16384, 16384) final)"))), NJ, NL, nj, nl);
   POLYBENCH_2D_ARRAY_DECL(C, DATA_TYPE __attribute__((annotate("scalar()"))), NJ, NM, nj, nm);
   POLYBENCH_2D_ARRAY_DECL(D, DATA_TYPE __attribute__((annotate("scalar()"))), NM, NL, nm, nl);
-  POLYBENCH_2D_ARRAY_DECL(G, DATA_TYPE __attribute__((annotate("scalar(range(-16384, 16384) final)"))), NI, NL, ni, nl);
+  POLYBENCH_2D_ARRAY_DECL(G, DATA_TYPE __attribute__((annotate("target('G') scalar(range(-16384, 16384) final)"))), NI, NL, ni, nl);
 
   /* Initialize array(s). */
   init_array (ni, nj, nk, nl, nm,

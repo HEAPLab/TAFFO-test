@@ -93,7 +93,7 @@ int main(int argc, char** argv)
   int n = N;
 
   /* Variable declaration/allocation. */
-  POLYBENCH_2D_ARRAY_DECL(path, DATA_TYPE __attribute__((annotate("scalar()"))), N, N, n, n);
+  POLYBENCH_2D_ARRAY_DECL(path, DATA_TYPE __attribute__((annotate("target('path') scalar()"))), N, N, n, n);
 
 
   /* Initialize array(s). */
