@@ -1,2 +1,2 @@
-taffo_add_unittest(TAFFOUnitTests TAFFOUnitTests MultiValueMapTest.cpp)
-target_link_libraries(TAFFOUnitTests PRIVATE TaffoUtils)
+taffo_add_unittest(TaffoUtilsTests TaffoUtilsTests MultiValueMapTest.cpp)
+target_link_libraries(TaffoUtilsTests PRIVATE TaffoUtils)

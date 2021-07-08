@@ -1,8 +1,1 @@
-add_subdirectory(InstructionMix)
 add_subdirectory(TaffoUtils)
-
-add_subdirectory(Initializer)
-add_subdirectory(RangeAnalysis)
-add_subdirectory(DataTypeAlloc)
-add_subdirectory(Conversion)
-add_subdirectory(ErrorAnalysis)
