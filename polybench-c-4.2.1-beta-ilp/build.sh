@@ -20,6 +20,7 @@ build_one()
     -Xdta -mixedtuningenob -Xdta "$enobweight" \
     -Xdta -mixedtuningtime -Xdta "$timeweight" \
     -Xdta -mixedtuningcastingtime -Xdta "$castweight" \
+    -Xvra -unroll -Xvra 0 \
     -debug-taffo \
     -temp-dir . \
       &> "$out.log"

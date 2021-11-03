@@ -71,3 +71,5 @@ int main(){
 
     return 0;
 }
+
+void *__taffo_vra_starting_function = main;

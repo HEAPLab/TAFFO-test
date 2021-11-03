@@ -106,3 +106,5 @@ int main(int argc, char** argv)
 
     return 0;
 }
+
+void *__taffo_vra_starting_function = main;
