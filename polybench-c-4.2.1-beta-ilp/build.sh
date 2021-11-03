@@ -9,13 +9,14 @@ build_one()
 
   bench="$1"
   pushd "$bench" > /dev/null
-  
   out="${bench}_${costmodel}_${enobweight}_${timeweight}_${castweight}"
+  float_out="${bench}_unmodified"
   taffo \
-    *.c -I.. -o "$out" $CFLAGS -D$pb_dataset\
+    *.c -I.. -o "$out" $CFLAGS -D$pb_dataset \
+    -float-output "$float_out" \
     -mixedmode \
     -costmodel "$costmodel" \
-    -instructionsetfile="$instrset" \
+    -instructionsetfile="$TAFFO_PREFIX/share/ILP/constrain/$instrset" \
     -Xdta -mixedtuningenob -Xdta "$enobweight" \
     -Xdta -mixedtuningtime -Xdta "$timeweight" \
     -Xdta -mixedtuningcastingtime -Xdta "$castweight" \
@@ -33,7 +34,7 @@ clean_one()
   # $1: bench name
   bench="$1"
   pushd "$bench" > /dev/null
-  rm -f *.ll *.log ${bench}_*
+  rm -f *.ll *.log ${bench}_* stats.txt
   popd > /dev/null
 }
 
@@ -41,6 +42,8 @@ if [[ -z $(which taffo) ]]; then
   printf 'error: no taffo in the path\n' > /dev/stderr
   exit 1
 fi
+
+TAFFO_PREFIX=$(dirname $(which taffo))/..
 
 if [[ -z $costmodel ]];  then export costmodel=core2; fi
 if [[ -z $instrset ]];   then export instrset=fix; fi
@@ -65,12 +68,14 @@ if [[ ( $# -gt 0 ) && ( $1 == clean ) ]]; then
 fi
 if [[ $# -eq 0 ]]; then
   benchs=*/
+else
+  benchs=$@
 fi
 
 cd "$SCRIPTPATH/src"
 for benchdir in $benchs; do
   bench=${benchdir%/}
-  printf '%s %s' "$action" "$bench"
+  printf '%-8s %-16s' "$action" "$bench"
   case $action in
     build)
       build_one $bench
