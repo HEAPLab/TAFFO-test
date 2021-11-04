@@ -9,3 +9,4 @@ _backup
 *.taffotmp.s
 *.taffotmp.txt
 simple-test-cases/build
+polybench-c-4.2.1-beta-ilp/.idea
