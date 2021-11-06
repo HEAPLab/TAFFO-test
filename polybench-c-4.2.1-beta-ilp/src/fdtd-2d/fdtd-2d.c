@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include "../instrument.h"
+#include "instrument.h"
 
 #define DATA_TYPE double
 
@@ -10,6 +10,12 @@
 #  define SQRT_FUN(x) sqrt(x)
 #  define EXP_FUN(x) exp(x)
 #  define POW_FUN(x,y) pow(x,y)
+
+#ifdef GLOBAL_ALLOC
+#define PB_STATIC static
+#else
+#define PB_STATIC
+#endif
 
 #  ifdef MINI_DATASET
 #   define TMAX 20
@@ -47,14 +53,16 @@
 
 #define POLYBENCH_DUMP_TARGET stdout
 
+
+int BENCH_MAIN(){
+
+
 /* Variable declaration/allocation. */
-DATA_TYPE __attribute__((annotate("scalar(range(-200, 200) final error(1e-100))"))) ex[NX][NY];
-DATA_TYPE __attribute__((annotate("scalar(range(-200, 200) final error(1e-100))"))) ey[NX][NY];
-DATA_TYPE __attribute__((annotate("scalar(range(-200, 200) final error(1e-100))"))) hz[NX][NY];
-DATA_TYPE __attribute__((annotate("scalar(error(1e-100))"))) _fict_[TMAX];
+  PB_STATIC DATA_TYPE __attribute__((annotate("scalar(range(-200, 200) final error(1e-100))"))) ex[NX][NY];
+  PB_STATIC DATA_TYPE __attribute__((annotate("scalar(range(-200, 200) final error(1e-100))"))) ey[NX][NY];
+  PB_STATIC DATA_TYPE __attribute__((annotate("scalar(range(-200, 200) final error(1e-100))"))) hz[NX][NY];
+  PB_STATIC DATA_TYPE __attribute__((annotate("scalar(error(1e-100))"))) _fict_[TMAX];
 
-
-int main(){
     TAFFO_DUMPCONFIG();
     TIMING_CPUCLOCK_START();
     /* Retrieve problem size. */
@@ -125,4 +133,6 @@ int main(){
     return 0;
 }
 
-void *__taffo_vra_starting_function = main;
+#ifdef __TAFFO__
+static void *__taffo_vra_starting_function = BENCH_MAIN;
+#endif

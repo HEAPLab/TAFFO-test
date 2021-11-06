@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "../instrument.h"
+#include "instrument.h"
 
 #  define DATA_TYPE double
 #  define DATA_PRINTF_MODIFIER "%0.16lf "
@@ -8,6 +8,12 @@
 #  define SQRT_FUN(x) sqrt(x)
 #  define EXP_FUN(x) exp(x)
 #  define POW_FUN(x,y) pow(x,y)
+
+#ifdef GLOBAL_ALLOC
+#define PB_STATIC static
+#else
+#define PB_STATIC
+#endif
 
 /*#   define NI 180
 #   define NJ 190
@@ -57,13 +63,13 @@
 
 #define POLYBENCH_DUMP_TARGET stdout
 
-DATA_TYPE __attribute__((annotate("scalar(range(-16384, 16384) final error(1e-100))"))) tmp[NI][NJ];
-DATA_TYPE __attribute__((annotate("scalar(error(1e-100))"))) A[NI][NK];
-DATA_TYPE __attribute__((annotate("scalar(error(1e-100))"))) B[NK][NJ];
-DATA_TYPE __attribute__((annotate("scalar(error(1e-100))"))) C[NJ][NL];
-DATA_TYPE __attribute__((annotate("scalar(range(-16384, 16384) final error(1e-100))"))) D[NI][NL];
-
-int main(){
+int BENCH_MAIN(){
+    PB_STATIC DATA_TYPE __attribute__((annotate("scalar(range(-16384, 16384) final error(1e-100))"))) tmp[NI][NJ];
+    PB_STATIC DATA_TYPE __attribute__((annotate("scalar(error(1e-100))"))) A[NI][NK];
+    PB_STATIC DATA_TYPE __attribute__((annotate("scalar(error(1e-100))"))) B[NK][NJ];
+    PB_STATIC DATA_TYPE __attribute__((annotate("scalar(error(1e-100))"))) C[NJ][NL];
+    PB_STATIC DATA_TYPE __attribute__((annotate("scalar(range(-16384, 16384) final error(1e-100))"))) D[NI][NL];
+    
     TAFFO_DUMPCONFIG();
     TIMING_CPUCLOCK_START();
     /* Retrieve problem size. */
@@ -122,4 +128,6 @@ int main(){
     return 0;
 }
 
-void *__taffo_vra_starting_function = main;
+#ifdef __TAFFO__
+void *__taffo_vra_starting_function = BENCH_MAIN;
+#endif

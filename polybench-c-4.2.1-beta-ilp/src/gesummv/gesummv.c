@@ -1,6 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "../instrument.h"
+#include "instrument.h"
+
+#ifdef GLOBAL_ALLOC
+#define PB_STATIC static
+#else
+#define PB_STATIC
+#endif
+
 #define POLYBENCH_DUMP_TARGET stdout
 #  define DATA_TYPE double
 #  define DATA_PRINTF_MODIFIER "%0.16lf "
@@ -31,13 +38,14 @@
 #define _PB_N N
 
 
-DATA_TYPE __attribute__((annotate("scalar(error(1e-100))"))) A[N][N];
-DATA_TYPE __attribute__((annotate("scalar(error(1e-100))"))) B[N][N];
-DATA_TYPE __attribute__((annotate("scalar(range(-256, 255) final error(1e-100))"))) tmp[N];
-DATA_TYPE __attribute__((annotate("scalar(error(1e-100))"))) x[N];
-DATA_TYPE __attribute__((annotate("scalar(range(-256, 255) final error(1e-100))"))) y[N];
+int BENCH_MAIN(){
 
-int main(){
+  PB_STATIC DATA_TYPE __attribute__((annotate("scalar(error(1e-100))"))) A[N][N];
+  PB_STATIC DATA_TYPE __attribute__((annotate("scalar(error(1e-100))"))) B[N][N];
+  PB_STATIC DATA_TYPE __attribute__((annotate("scalar(range(-256, 255) final error(1e-100))"))) tmp[N];
+  PB_STATIC DATA_TYPE __attribute__((annotate("scalar(error(1e-100))"))) x[N];
+  PB_STATIC DATA_TYPE __attribute__((annotate("scalar(range(-256, 255) final error(1e-100))"))) y[N];
+
     TAFFO_DUMPCONFIG();
     TIMING_CPUCLOCK_START();
     /* Retrieve problem size. */
@@ -84,4 +92,6 @@ int main(){
     return 0;
 }
 
-void *__taffo_vra_starting_function = main;
+#ifdef __TAFFO__
+static void *__taffo_vra_starting_function = BENCH_MAIN;
+#endif

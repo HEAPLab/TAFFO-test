@@ -1,7 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include "../instrument.h"
+#include "instrument.h"
+
+#ifdef GLOBAL_ALLOC
+#define PB_STATIC static
+#else
+#define PB_STATIC
+#endif
 
 #  ifdef MINI_DATASET
 #   define W 64
@@ -40,13 +46,14 @@
 #define DATA_TYPE double
 #define ALPHA 0.25
 
+int BENCH_MAIN(){
 
-DATA_TYPE   __attribute__((annotate("scalar(error(1e-100))"))) imgIn[W][H];
-DATA_TYPE  __attribute__((annotate("scalar(error(1e-100))"))) imgOut[W][H];
-DATA_TYPE  __attribute__((annotate("scalar(error(1e-100))"))) _y1[W][H];
-DATA_TYPE  __attribute__((annotate("scalar(error(1e-100))"))) y2[W][H];
 
-int main(){
+  PB_STATIC DATA_TYPE   __attribute__((annotate("scalar(error(1e-100))"))) imgIn[W][H];
+  PB_STATIC DATA_TYPE  __attribute__((annotate("scalar(error(1e-100))"))) imgOut[W][H];
+  PB_STATIC DATA_TYPE  __attribute__((annotate("scalar(error(1e-100))"))) _y1[W][H];
+  PB_STATIC DATA_TYPE  __attribute__((annotate("scalar(error(1e-100))"))) y2[W][H];
+
     TAFFO_DUMPCONFIG();
     TIMING_CPUCLOCK_START();
     /* Retrieve problem size. */
@@ -171,4 +178,6 @@ int main(){
     return 0;
 }
 
-void *__taffo_vra_starting_function = main;
+#ifdef __TAFFO__
+static void *__taffo_vra_starting_function = BENCH_MAIN;
+#endif

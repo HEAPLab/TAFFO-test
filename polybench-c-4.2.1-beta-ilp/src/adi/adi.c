@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "../instrument.h"
+#include "instrument.h"
 #define DATA_TYPE double
 #  define DATA_TYPE double
 #  define DATA_PRINTF_MODIFIER "%0.16lf "
@@ -8,6 +8,13 @@
 #  define SQRT_FUN(x) sqrt(x)
 #  define EXP_FUN(x) exp(x)
 #  define POW_FUN(x,y) pow(x,y)
+
+#ifdef GLOBAL_ALLOC
+#define PB_STATIC static
+#else
+#define PB_STATIC
+#endif
+
 #  ifdef MINI_DATASET
 #   define TSTEPS 20
 #   define N 20
@@ -36,19 +43,20 @@
 #   define _PB_TSTEPS TSTEPS
 #   define _PB_N N
 
-DATA_TYPE __attribute__((annotate("scalar(error(1e-100))"))) DX, DY, DT;
-DATA_TYPE __attribute__((annotate("scalar(error(1e-100))"))) B1, B2;
-DATA_TYPE __attribute__((annotate("scalar(error(1e-100))"))) mul1, mul2;
-DATA_TYPE __attribute__((annotate("scalar(error(1e-100))"))) a, b, c, d, e, f;
-
-
-DATA_TYPE __attribute__((annotate("scalar(range(-60,60) final error(1e-100))")))u[N][N];
-DATA_TYPE __attribute__((annotate("scalar(range(-2,2) final error(1e-100))")))v[N][N];
-DATA_TYPE __attribute__((annotate("scalar(range(-1,1) final error(1e-100))")))p[N][N];
-DATA_TYPE __attribute__((annotate("scalar(range(-500,500) final error(1e-100))")))q[N][N];
-
-int main(int argc, char** argv)
+int BENCH_MAIN(int argc, char** argv)
 {
+
+  PB_STATIC DATA_TYPE __attribute__((annotate("scalar(error(1e-100))"))) DX, DY, DT;
+  PB_STATIC DATA_TYPE __attribute__((annotate("scalar(error(1e-100))"))) B1, B2;
+  PB_STATIC DATA_TYPE __attribute__((annotate("scalar(error(1e-100))"))) mul1, mul2;
+  PB_STATIC DATA_TYPE __attribute__((annotate("scalar(error(1e-100))"))) a, b, c, d, e, f;
+
+
+  PB_STATIC DATA_TYPE __attribute__((annotate("scalar(range(-60,60) final error(1e-100))")))u[N][N];
+  PB_STATIC DATA_TYPE __attribute__((annotate("scalar(range(-2,2) final error(1e-100))")))v[N][N];
+  PB_STATIC DATA_TYPE __attribute__((annotate("scalar(range(-1,1) final error(1e-100))")))p[N][N];
+  PB_STATIC DATA_TYPE __attribute__((annotate("scalar(range(-500,500) final error(1e-100))")))q[N][N];
+
     TAFFO_DUMPCONFIG();
     TIMING_CPUCLOCK_START();
     /* Retrieve problem size. */
@@ -153,4 +161,6 @@ int main(int argc, char** argv)
     return 0;
 }
 
-void *__taffo_vra_starting_function = main;
+#ifdef __TAFFO__
+static void *__taffo_vra_starting_function = BENCH_MAIN;
+#endif

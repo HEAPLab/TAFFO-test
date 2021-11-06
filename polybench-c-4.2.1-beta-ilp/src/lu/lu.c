@@ -1,6 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "../instrument.h"
+#include "instrument.h"
+
+#ifdef GLOBAL_ALLOC
+#define PB_STATIC static
+#else
+#define PB_STATIC
+#endif
+
 #  define DATA_TYPE double
 #  define DATA_PRINTF_MODIFIER "%0.16lf "
 #  define SCALAR_VAL(x) x
@@ -30,12 +37,15 @@
 #   define _PB_N N
 
 #define POLYBENCH_DUMP_TARGET stdout
+
+
+int BENCH_MAIN(){
+
 /* Variable declaration/allocation. */
-DATA_TYPE __attribute__((annotate("scalar(range(-10, 10) final error(1e-100))"))) A[N][N];
-DATA_TYPE __attribute__((annotate("scalar(error(1e-100))"))) B[N][N];
+  PB_STATIC DATA_TYPE __attribute__((annotate("scalar(range(-10, 10) final error(1e-100))"))) A[N][N];
+  PB_STATIC DATA_TYPE __attribute__((annotate("scalar(error(1e-100))"))) B[N][N];
 
 
-int main(){
     TAFFO_DUMPCONFIG();
     TIMING_CPUCLOCK_START();
 /* Retrieve problem size. */
@@ -98,4 +108,6 @@ int main(){
     return 0;
 }
 
-void *__taffo_vra_starting_function = main;
+#ifdef __TAFFO__
+static void *__taffo_vra_starting_function = BENCH_MAIN;
+#endif

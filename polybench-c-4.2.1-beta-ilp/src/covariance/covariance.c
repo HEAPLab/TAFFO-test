@@ -1,7 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "../instrument.h"
+#include "instrument.h"
 #define DATA_TYPE double
+
+#ifdef GLOBAL_ALLOC
+#define PB_STATIC static
+#else
+#define PB_STATIC
+#endif
+
 #  ifdef MINI_DATASET
 #   define M 28
 #   define N 32
@@ -30,12 +37,14 @@
 #define _PB_M M
 #define _PB_N N
 
-DATA_TYPE __attribute((annotate("scalar(range(-2097152, 2097151) final error(1e-100))"))) data[N][M];
-DATA_TYPE __attribute((annotate("scalar(range(-2097152, 2097151) final error(1e-100))"))) cov[N][M];
-DATA_TYPE __attribute((annotate("scalar(error(1e-100))"))) mean[M];
-
-int main(int argc, char** argv)
+int BENCH_MAIN(int argc, char** argv)
 {
+
+
+  PB_STATIC DATA_TYPE __attribute((annotate("scalar(range(-2097152, 2097151) final error(1e-100))"))) data[N][M];
+  PB_STATIC DATA_TYPE __attribute((annotate("scalar(range(-2097152, 2097151) final error(1e-100))"))) cov[N][M];
+  PB_STATIC DATA_TYPE __attribute((annotate("scalar(error(1e-100))"))) mean[M];
+
     TAFFO_DUMPCONFIG();
     TIMING_CPUCLOCK_START();
     /* Retrieve problem size. */
@@ -107,4 +116,6 @@ int main(int argc, char** argv)
     return 0;
 }
 
-void *__taffo_vra_starting_function = main;
+#ifdef __TAFFO__
+static void *__taffo_vra_starting_function = BENCH_MAIN;
+#endif

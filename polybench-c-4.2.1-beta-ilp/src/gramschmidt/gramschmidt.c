@@ -1,7 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include "../instrument.h"
+#include "instrument.h"
+
+#ifdef GLOBAL_ALLOC
+#define PB_STATIC static
+#else
+#define PB_STATIC
+#endif
+
 #define POLYBENCH_DUMP_TARGET stdout
 #  ifdef MINI_DATASET
 #   define M 20
@@ -38,12 +45,14 @@
 #  define EXP_FUN(x) exp(x)
 #  define POW_FUN(x,y) pow(x,y)
 
-/* Variable declaration/allocation. */
-DATA_TYPE __attribute__((annotate("scalar(range(-1000, 1000) final error(1e-100))"))) A[M][N];
-DATA_TYPE __attribute__((annotate("scalar(range(-1000, 1000) final error(1e-100))"))) R[N][N];
-DATA_TYPE __attribute__((annotate("scalar(range(-1000, 1000) final error(1e-100))"))) Q[M][N];
 
-int main(){
+int BENCH_MAIN(){
+
+/* Variable declaration/allocation. */
+  PB_STATIC DATA_TYPE __attribute__((annotate("scalar(range(-1000, 1000) final error(1e-100))"))) A[M][N];
+  PB_STATIC DATA_TYPE __attribute__((annotate("scalar(range(-1000, 1000) final error(1e-100))"))) R[N][N];
+  PB_STATIC DATA_TYPE __attribute__((annotate("scalar(range(-1000, 1000) final error(1e-100))"))) Q[M][N];
+
     TAFFO_DUMPCONFIG();
     TIMING_CPUCLOCK_START();
     /* Retrieve problem size. */
@@ -109,4 +118,6 @@ int main(){
     return 0;
 }
 
-void *__taffo_vra_starting_function = main;
+#ifdef __TAFFO__
+static void *__taffo_vra_starting_function = BENCH_MAIN;
+#endif
